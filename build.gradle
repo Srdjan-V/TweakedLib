@@ -92,10 +92,17 @@ repositories {
     maven {
         url = 'https://repo.spongepowered.org/maven'
     }
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+
+    compileOnly 'mezz.jei:jei_1.12.2:4.16.1.302:api'
 
     compileOnly('zone.rong:mixinbooter:5.0')
     runtimeOnly('zone.rong:mixinbooter:5.0')
