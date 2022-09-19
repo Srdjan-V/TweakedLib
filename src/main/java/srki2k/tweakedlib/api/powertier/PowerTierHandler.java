@@ -41,4 +41,13 @@ public final class PowerTierHandler {
         return rftTier.get(-1);
     }
 
+    /**
+     * Gets gets the number of PowerTier
+     *
+     * @return Returns int
+     */
+    public static int getSize() {
+        return rftTier.size();
+    }
+
 }
