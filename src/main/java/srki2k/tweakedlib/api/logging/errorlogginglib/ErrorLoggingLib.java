@@ -1,4 +1,4 @@
-package srki2k.tweakedlib.util.errorlogging;
+package srki2k.tweakedlib.api.logging.errorlogginglib;
 
 import crafttweaker.CraftTweakerAPI;
 import srki2k.tweakedlib.TweakedLib;
@@ -6,9 +6,9 @@ import srki2k.tweakedlib.TweakedLib;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ErrorLoggingUtil {
+public final class ErrorLoggingLib {
 
-    private ErrorLoggingUtil() {
+    private ErrorLoggingLib() {
     }
 
     private static final List<ICustomLogger> iCustomLoggerPool = new ArrayList<>();
@@ -68,7 +68,6 @@ public final class ErrorLoggingUtil {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
     private static void loggAll(ICustomLogger customLogger) {
         logSetting(customLogger);
         logErrors(customLogger);
@@ -81,7 +80,7 @@ public final class ErrorLoggingUtil {
             return;
         }
 
-        TweakedLib.LOGGER.info("Configs (" + customLogger.modid() + "):");
+        TweakedLib.LOGGER.info("Configs (" + customLogger.getMODID() + "):");
         for (String s : strings) {
             TweakedLib.LOGGER.info(s);
         }
@@ -89,7 +88,7 @@ public final class ErrorLoggingUtil {
     }
 
     private static void logErrors(ICustomLogger customLogger) {
-        TweakedLib.LOGGER.info("Errors (" + customLogger.modid() + "):");
+        TweakedLib.LOGGER.info("Errors (" + customLogger.getMODID() + "):");
         for (String s : customLogger.getErrors()) {
             TweakedLib.LOGGER.fatal(s);
         }
@@ -100,7 +99,7 @@ public final class ErrorLoggingUtil {
             return;
         }
 
-        CraftTweakerAPI.logError("Errors (" + customLogger.modid() + "):");
+        CraftTweakerAPI.logError("Errors (" + customLogger.getMODID() + "):");
         for (String s : customLogger.getErrors()) {
             CraftTweakerAPI.logError(s);
         }

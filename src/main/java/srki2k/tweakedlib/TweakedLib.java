@@ -1,14 +1,18 @@
 package srki2k.tweakedlib;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import srki2k.tweakedlib.powertierlogging.PowerTierLogging;
-import srki2k.tweakedlib.util.errorlogging.ErrorLoggingUtil;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import srki2k.tweakedlib.common.Constants;
+import srki2k.tweakedlib.common.powertierlogging.PowerTierLogging;
+import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import srki2k.tweakedlib.util.Constants;
 
 @Mod(modid = TweakedLib.MODID,
         version = TweakedLib.VERSION,
@@ -18,19 +22,27 @@ public class TweakedLib {
     public static final String VERSION = "@VERSION@";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
+    @SubscribeEvent
+    public void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if (event.getModID().equals(MODID)) {
+            ConfigManager.sync(MODID, net.minecraftforge.common.config.Config.Type.INSTANCE);
+        }
+    }
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(this);
         Constants.init();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        ErrorLoggingUtil.addCustomLogger(new PowerTierLogging());
+        PowerTierLogging.RegisterLogger();
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        ErrorLoggingUtil.validateState();
+        ErrorLoggingLib.validateState();
     }
 
 }

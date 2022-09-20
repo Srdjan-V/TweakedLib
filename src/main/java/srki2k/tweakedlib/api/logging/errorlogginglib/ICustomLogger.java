@@ -1,4 +1,4 @@
-package srki2k.tweakedlib.util.errorlogging;
+package srki2k.tweakedlib.api.logging.errorlogginglib;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface ICustomLogger {
 
     boolean logErrorToUsersInGameWithCT();
 
-    String modid();
+    String getMODID();
 
     String[] getConfigs();
 
