@@ -4,6 +4,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import srki2k.tweakedlib.powertierlogging.PowerTierLogging;
 import srki2k.tweakedlib.util.errorlogging.ErrorLoggingUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +25,7 @@ public class TweakedLib {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        ErrorLoggingUtil.addCustomLogger(new PowerTierLogging());
     }
 
     @Mod.EventHandler

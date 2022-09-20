@@ -8,6 +8,10 @@ public interface ICustomLogger {
 
     boolean handleRuntimeErrors();
 
+    boolean discardLoggerAfterStartup();
+
+    boolean logErrorToUsersInGameWithCT();
+
     String modid();
 
     String[] getConfigs();

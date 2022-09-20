@@ -1,5 +1,6 @@
 package srki2k.tweakedlib.util.errorlogging;
 
+import crafttweaker.CraftTweakerAPI;
 import srki2k.tweakedlib.TweakedLib;
 
 import java.util.ArrayList;
@@ -10,27 +11,36 @@ public final class ErrorLoggingUtil {
     private ErrorLoggingUtil() {
     }
 
-    private static final List<ICustomLogger> customLoggers = new ArrayList<>();
+    private static final List<ICustomLogger> iCustomLoggerPool = new ArrayList<>();
 
     public static void addCustomLogger(ICustomLogger customLogger) {
-        customLoggers.add(customLogger);
+        iCustomLoggerPool.add(customLogger);
     }
-
 
     public static void validateState() {
         List<ICustomLogger> errorLoggers = new ArrayList<>();
-        customLoggers.forEach(customLogger -> {
+        List<ICustomLogger> discardedErrorLoggers = new ArrayList<>();
+
+        iCustomLoggerPool.forEach(customLogger -> {
             if (customLogger.doCustomCheck()) {
                 errorLoggers.add(customLogger);
+            }
+            if (customLogger.discardLoggerAfterStartup()) {
+                discardedErrorLoggers.add(customLogger);
             }
         });
 
         commonLog(errorLoggers);
+
+        //Remove startup error loggers, and keep only runtime
+        for (ICustomLogger i : discardedErrorLoggers) {
+            iCustomLoggerPool.remove(i);
+        }
     }
 
     public static void runtimeErrorLogging() {
         List<ICustomLogger> errorLoggers = new ArrayList<>();
-        customLoggers.forEach(customLogger -> {
+        iCustomLoggerPool.forEach(customLogger -> {
             if (customLogger.handleRuntimeErrors()) {
                 errorLoggers.add(customLogger);
             }
@@ -62,11 +72,17 @@ public final class ErrorLoggingUtil {
     private static void loggAll(ICustomLogger customLogger) {
         logSetting(customLogger);
         logErrors(customLogger);
+        logErrorsToUserWithCT(customLogger);
     }
 
     private static void logSetting(ICustomLogger customLogger) {
+        String[] strings = customLogger.getConfigs();
+        if (strings.length == 0) {
+            return;
+        }
+
         TweakedLib.LOGGER.info("Configs (" + customLogger.modid() + "):");
-        for (String s : customLogger.getConfigs()) {
+        for (String s : strings) {
             TweakedLib.LOGGER.info(s);
         }
 
@@ -79,6 +95,15 @@ public final class ErrorLoggingUtil {
         }
     }
 
+    private static void logErrorsToUserWithCT(ICustomLogger customLogger) {
+        if (!customLogger.logErrorToUsersInGameWithCT()) {
+            return;
+        }
+
+        CraftTweakerAPI.logError("Errors (" + customLogger.modid() + "):");
+        for (String s : customLogger.getErrors()) {
+            CraftTweakerAPI.logError(s);
+        }
+    }
+
 }
-
-

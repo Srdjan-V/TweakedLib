@@ -93,6 +93,13 @@ repositories {
         url = 'https://repo.spongepowered.org/maven'
     }
     maven {
+        name 'jared maven'
+        url 'https://maven.blamejared.com/'
+        content {
+            includeGroup "CraftTweaker2"
+        }
+    }
+    maven {
         // location of the maven that hosts JEI files
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
@@ -102,6 +109,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
+    compileOnly 'CraftTweaker2:CraftTweaker2-API:4.1.20.679'
     compileOnly 'mezz.jei:jei_1.12.2:4.16.1.302:api'
 
     compileOnly('zone.rong:mixinbooter:5.0')
