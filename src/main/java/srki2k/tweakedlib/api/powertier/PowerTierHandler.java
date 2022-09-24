@@ -1,5 +1,7 @@
 package srki2k.tweakedlib.api.powertier;
 
+import blusunrize.immersiveengineering.api.energy.immersiveflux.FluxStorageAdvanced;
+
 import java.util.HashMap;
 
 public final class PowerTierHandler {
@@ -48,6 +50,13 @@ public final class PowerTierHandler {
      */
     public static int getSize() {
         return rftTier.size();
+    }
+
+    public static void initFluxStorage(FluxStorageAdvanced fluxStorage, PowerTier powerTier) {
+        // TODO: 24/09/2022 add configs 
+        fluxStorage.setCapacity(powerTier.getCapacity());
+        fluxStorage.setLimitReceive(Integer.min(powerTier.getRft() * 2, powerTier.getCapacity()));
+        fluxStorage.setMaxExtract(powerTier.getRft());
     }
 
 }

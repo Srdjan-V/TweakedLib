@@ -97,6 +97,7 @@ repositories {
         url 'https://maven.blamejared.com/'
         content {
             includeGroup "CraftTweaker2"
+            includeGroup "blusunrize"
         }
     }
     maven {
@@ -111,6 +112,7 @@ dependencies {
 
     compileOnly 'CraftTweaker2:CraftTweaker2-API:4.1.20.679'
     runtimeOnly 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.679'
+    implementation fg.deobf('blusunrize:ImmersiveEngineering:0.12-92-559')
 
     compileOnly 'mezz.jei:jei_1.12.2:4.16.1.302:api'
 
