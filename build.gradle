@@ -120,6 +120,10 @@ dependencies {
     runtimeOnly 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.679'
     implementation fg.deobf('curse.maven:ImmersiveEngineering-231951:2974106')
 
+    //AdvancedRocketry
+    implementation fg.deobf('curse.maven:AdvancedRocketry-236542:3801020')
+    implementation fg.deobf('curse.maven:Libvulpes-236541:3801015')
+
     compileOnly 'mezz.jei:jei_1.12.2:4.16.1.302:api'
 
     compileOnly('zone.rong:mixinbooter:5.0')
