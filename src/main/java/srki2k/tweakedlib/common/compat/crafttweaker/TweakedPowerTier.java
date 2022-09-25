@@ -1,4 +1,4 @@
-package srki2k.tweakedlib.common.compat;
+package srki2k.tweakedlib.common.compat.crafttweaker;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;

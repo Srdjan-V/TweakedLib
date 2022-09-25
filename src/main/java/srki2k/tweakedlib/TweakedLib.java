@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import srki2k.tweakedlib.common.Constants;
+import srki2k.tweakedlib.common.PowerTierRegistration;
 import srki2k.tweakedlib.common.powertierlogging.PowerTierLogging;
 import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +34,7 @@ public class TweakedLib {
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
         Constants.init();
+        PowerTierRegistration.init();
     }
 
     @Mod.EventHandler
