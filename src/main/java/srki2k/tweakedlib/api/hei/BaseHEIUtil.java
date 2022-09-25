@@ -33,11 +33,10 @@ public class BaseHEIUtil {
 
     public static void initExcavatorGui(IGuiHelper guiHelper, ItemStack catalyst, String modid) {
         if (excavator == null) {
-            // TODO: 18/09/2022 implement
             ResourceLocation location = new ResourceLocation(modid, "textures/gui/excavator.png");
 
             excavator = new IDrawable[1];
-            excavator[0] = guiHelper.createDrawable(location, 0, 0, 0, 0);
+            excavator[0] = guiHelper.createDrawable(location, 0, 0, 159, 77);
 
             BaseHEIUtil.catalyst[1] = catalyst;
         }
