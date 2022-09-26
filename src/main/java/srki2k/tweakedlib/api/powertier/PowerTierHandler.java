@@ -19,9 +19,18 @@ public final class PowerTierHandler {
      * @param tier     The tier of the power, must start from 0
      * @param capacity The capacity
      * @param rft      The RF/t
+     * @return true if the power tier has been registered false if not
      */
-    public static void registerPowerUsage(int tier, int capacity, int rft) {
+    public static boolean registerPowerUsage(int tier, int capacity, int rft) {
+        if (tier < 0) {
+            return false;
+        }
+        if (getPowerTier(tier) != null) {
+            return false;
+        }
+
         rftTier.put(tier, new PowerTier(capacity, rft));
+        return true;
     }
 
     /**
@@ -32,6 +41,32 @@ public final class PowerTierHandler {
      */
     public static PowerTier getPowerTier(int id) {
         return rftTier.get(id);
+    }
+
+    /**
+     * Gets the PowerTier object associated with the id,
+     * if it's not existing return the fallback PowerTier
+     *
+     * @param id Power-tier id
+     * @return Returns PowerTier
+     */
+    public static PowerTier getPowerTierWithFallback(int id) {
+        PowerTier powerTier = rftTier.get(id);
+        if (powerTier == null) {
+            return getFallbackPowerTier();
+        }
+        return powerTier;
+    }
+
+    /**
+     * returns if that PowerTier object exists
+     *
+     * @param id Power-tier id
+     * @return If it exists
+     */
+    public static boolean powerTierExists(int id) {
+        PowerTier powerTier = rftTier.get(id);
+        return powerTier != null;
     }
 
     /**
@@ -52,7 +87,26 @@ public final class PowerTierHandler {
         return rftTier.size();
     }
 
-    public static void initFluxStorage(FluxStorageAdvanced fluxStorage, PowerTier powerTier) {
+    /**
+     * Initialize FluxStorage with the provided power tier
+     *
+     * @param fluxStorage FluxStorageAdvanced object to initialize
+     * @param powerTier   PowerTier object
+     */
+    public static void initFluxStorageWithPowerTier(FluxStorageAdvanced fluxStorage, PowerTier powerTier) {
+        fluxStorage.setCapacity(powerTier.getCapacity());
+        fluxStorage.setLimitReceive(Integer.min(powerTier.getRft() * 2, powerTier.getCapacity()));
+        fluxStorage.setMaxExtract(powerTier.getRft());
+    }
+
+    /**
+     * Initialize FluxStorage with the provided powerTierID
+     *
+     * @param fluxStorage FluxStorageAdvanced object to initialize
+     * @param powerTierID PowerTier id
+     */
+    public static void initFluxStorageWithPowerTierID(FluxStorageAdvanced fluxStorage, int powerTierID) {
+        PowerTier powerTier = rftTier.get(powerTierID);
         fluxStorage.setCapacity(powerTier.getCapacity());
         fluxStorage.setLimitReceive(Integer.min(powerTier.getRft() * 2, powerTier.getCapacity()));
         fluxStorage.setMaxExtract(powerTier.getRft());

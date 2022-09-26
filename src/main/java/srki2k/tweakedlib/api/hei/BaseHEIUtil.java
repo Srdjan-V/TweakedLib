@@ -2,23 +2,21 @@ package srki2k.tweakedlib.api.hei;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.Language;
-import net.minecraft.client.resources.LanguageManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.DimensionType;
 import org.lwjgl.input.Keyboard;
 import srki2k.tweakedlib.TweakedLib;
-import srki2k.tweakedlib.api.powertier.PowerTier;
 import srki2k.tweakedlib.api.powertier.PowerTierHandler;
 import srki2k.tweakedlib.common.Constants;
 import zmaster587.advancedRocketry.dimension.DimensionManager;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.IllegalFormatException;
+import java.util.List;
 
 
 @SuppressWarnings("deprecation")
@@ -139,7 +137,7 @@ public class BaseHEIUtil {
     }
 
 
-    public static void dimensionListData(List<String> list, int[] dimensionWhitelist, int[] dimensionBlacklist){
+    public static void dimensionListData(List<String> list, int[] dimensionWhitelist, int[] dimensionBlacklist) {
         list.add(translateToLocalFormatted("tweakedlib.jei.dimensions"));
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
             list.add(translateToLocalFormatted("tweakedlib.jei.dimension_whitelist", detailedDimension(dimensionWhitelist)));
@@ -155,7 +153,7 @@ public class BaseHEIUtil {
         list.add(translateToLocalFormatted("tweakedlib.jei.lshift"));
     }
 
-    public static void powerTierListData (List<String> list, int powerTier){
+    public static void powerTierListData(List<String> list, int powerTier) {
         list.add(translateToLocalFormatted("tweakedlib.jei.power_tier", powerTier));
         list.add(translateToLocalFormatted("tweakedlib.jei.power_capacity", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity())));
         list.add(translateToLocalFormatted("tweakedlib.jei.power_usage", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft())));
@@ -174,25 +172,6 @@ public class BaseHEIUtil {
             TweakedLib.LOGGER.error("Format error: {}", s, e);
             return "Format error: " + s;
         }
-    }
-
-    public static String toLowercaseWithLocale(String string) {
-        return string.toLowerCase(getLocale());
-    }
-
-    private static Locale getLocale() {
-        Minecraft minecraft = Minecraft.getMinecraft();
-        if (minecraft != null) {
-            LanguageManager languageManager = minecraft.getLanguageManager();
-            if (languageManager != null) {
-                Language currentLanguage = languageManager.getCurrentLanguage();
-                if (currentLanguage != null) {
-                    return currentLanguage.getJavaLocale();
-                }
-            }
-        }
-
-        return Locale.getDefault();
     }
 
 }
