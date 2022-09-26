@@ -152,13 +152,13 @@ public class BaseHEIUtil {
         list.add(translateToLocalFormatted("tweakedlib.jei.dimension_blacklist", Arrays.toString(dimensionBlacklist)));
 
         list.add("");
-        list.add(translateToLocalFormatted("jei.pumpjack.reservoir.lshift"));
+        list.add(translateToLocalFormatted("tweakedlib.jei.lshift"));
     }
 
     public static void powerTierListData (List<String> list, int powerTier){
-        list.add(translateToLocalFormatted("jei.pumpjack.reservoir.power_tier", powerTier));
-        list.add(translateToLocalFormatted("jei.pumpjack.reservoir.power_capacity", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity())));
-        list.add(translateToLocalFormatted("jei.pumpjack.reservoir.power_usage", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft())));
+        list.add(translateToLocalFormatted("tweakedlib.jei.power_tier", powerTier));
+        list.add(translateToLocalFormatted("tweakedlib.jei.power_capacity", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity())));
+        list.add(translateToLocalFormatted("tweakedlib.jei.power_usage", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft())));
     }
 
     public static String translateToLocal(String key) {
