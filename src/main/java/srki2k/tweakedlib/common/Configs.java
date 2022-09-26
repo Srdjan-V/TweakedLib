@@ -13,11 +13,6 @@ public class Configs {
 
         public static class Logging {
 
-            @Config.Comment({"This will disable all Logging, default=false"})
-            @Config.Name("Disable Logging")
-            @Config.RequiresMcRestart
-            public static boolean disableLogging = false;
-
             @Config.Comment({"This will check if you have 0 Power Tiers, default=true"})
             @Config.Name("Log missing Power Tiers")
             @Config.RequiresMcRestart
@@ -30,10 +25,10 @@ public class Configs {
 
         }
 
-        @Config.Name("Default Power Tiers")
-        public static DefaultPowerTiers defaultPowerTiers;
+        @Config.Name("Default Machine Power Tiers")
+        public static DefaultMachinePowerTiers defaultMachinePowerTiers;
 
-        public static class DefaultPowerTiers {
+        public static class DefaultMachinePowerTiers {
 
             @Config.Comment({"If TweakedPetroleum is loaded these configs might load"})
             @Config.Name("Default Pumpjack Power Tiers")

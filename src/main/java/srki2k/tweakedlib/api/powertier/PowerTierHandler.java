@@ -53,7 +53,6 @@ public final class PowerTierHandler {
     }
 
     public static void initFluxStorage(FluxStorageAdvanced fluxStorage, PowerTier powerTier) {
-        // TODO: 24/09/2022 add configs 
         fluxStorage.setCapacity(powerTier.getCapacity());
         fluxStorage.setLimitReceive(Integer.min(powerTier.getRft() * 2, powerTier.getCapacity()));
         fluxStorage.setMaxExtract(powerTier.getRft());

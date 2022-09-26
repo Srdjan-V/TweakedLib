@@ -1,24 +1,24 @@
 package srki2k.tweakedlib.common;
 
 import srki2k.tweakedlib.api.powertier.PowerTierHandler;
-import srki2k.tweakedlib.common.Configs.TLConfigs.DefaultPowerTiers;
+import srki2k.tweakedlib.common.Configs.TLConfigs.DefaultMachinePowerTiers;
 
 public class PowerTierRegistration {
 
     public static void init() {
         if (Constants.isTweakedExcavationLoaded()) {
-            if (DefaultPowerTiers.DefaultExcavatorPowerTiers.load) {
-                PowerTierHandler.registerPowerUsage(DefaultPowerTiers.DefaultExcavatorPowerTiers.powerTier,
-                        DefaultPowerTiers.DefaultExcavatorPowerTiers.capacity,
-                        DefaultPowerTiers.DefaultExcavatorPowerTiers.rft);
+            if (DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.load) {
+                PowerTierHandler.registerPowerUsage(DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.powerTier,
+                        DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.capacity,
+                        DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.rft);
             }
         }
 
         if (Constants.isTweakedPetroleumLoaded()) {
-            if (DefaultPowerTiers.DefaultPumpjackPowerTiers.load) {
-                PowerTierHandler.registerPowerUsage(DefaultPowerTiers.DefaultPumpjackPowerTiers.powerTier,
-                        DefaultPowerTiers.DefaultPumpjackPowerTiers.capacity,
-                        DefaultPowerTiers.DefaultPumpjackPowerTiers.rft);
+            if (DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.load) {
+                PowerTierHandler.registerPowerUsage(DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.powerTier,
+                        DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.capacity,
+                        DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.rft);
             }
         }
 
