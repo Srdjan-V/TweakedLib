@@ -18,7 +18,7 @@ public class Configs {
             @Config.RequiresMcRestart
             public static boolean logMissingContent = true;
 
-            @Config.Comment({"Log errors to the player once he joins the game, default=true"})
+            @Config.Comment({"Log startup errors to the player once he joins the game, default=true"})
             @Config.Name("Log errors to players")
             @Config.RequiresMcRestart
             public static boolean logToPlayers = true;
@@ -33,6 +33,7 @@ public class Configs {
             @Config.Comment({"If TweakedPetroleum is loaded these configs might load"})
             @Config.Name("Default Pumpjack Power Tiers")
             public static DefaultPumpjackPowerTiers defaultPumpjackPowerTiers;
+
             public static class DefaultPumpjackPowerTiers {
 
                 @Config.Comment({"Setting this to false will make this power tier not register, default=true"})
@@ -60,7 +61,7 @@ public class Configs {
 
             }
 
-            @Config.Comment({"If TweakedPetroleum is loaded these configs might load"})
+            @Config.Comment({"If TweakedExcavation is loaded these configs might load"})
             @Config.Name("Default Excavator Power Tiers")
             public static DefaultExcavatorPowerTiers defaultExcavatorPowerTiers;
 
@@ -94,4 +95,5 @@ public class Configs {
         }
 
     }
+
 }
