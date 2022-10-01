@@ -1,7 +1,9 @@
 package srki2k.tweakedlib.api.logging.errorlogginglib;
 
 import crafttweaker.CraftTweakerAPI;
+import org.apache.logging.log4j.Logger;
 import srki2k.tweakedlib.TweakedLib;
+import srki2k.tweakedlib.common.Configs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,89 +20,89 @@ public final class ErrorLoggingLib {
     }
 
     public static void validateState() {
-        List<ICustomLogger> errorLoggers = new ArrayList<>();
-        List<ICustomLogger> discardedErrorLoggers = new ArrayList<>();
+        List<ICustomLogger> loggers = new ArrayList<>();
 
         iCustomLoggerPool.forEach(customLogger -> {
-            if (customLogger.doCustomCheck()) {
-                errorLoggers.add(customLogger);
-            }
-            if (customLogger.discardLoggerAfterStartup()) {
-                discardedErrorLoggers.add(customLogger);
+            if (customLogger.startupChecks()) {
+                loggers.add(customLogger);
             }
         });
 
-        commonLog(errorLoggers);
+        if (Configs.TLConfigs.Logging.logMissingPowerTier) {
+            commonRuntimeCheck(loggers);
+        }
+
+        commonLog(loggers);
 
         //Remove startup error loggers, and keep only runtime
-        for (ICustomLogger i : discardedErrorLoggers) {
-            iCustomLoggerPool.remove(i);
-        }
+        iCustomLoggerPool.removeIf(ICustomLogger::discardLoggerAfterStartup);
+
     }
 
     public static void runtimeErrorLogging() {
-        List<ICustomLogger> errorLoggers = new ArrayList<>();
-        iCustomLoggerPool.forEach(customLogger -> {
-            if (customLogger.handleRuntimeErrors()) {
-                errorLoggers.add(customLogger);
-            }
-        });
+        List<ICustomLogger> loggers = new ArrayList<>();
+        commonRuntimeCheck(loggers);
 
-        if (commonLog(errorLoggers)) {
+        if (!commonLog(loggers)) {
             TweakedLib.LOGGER.warn("Runtime error reporting was called, but no errors where found");
             return;
         }
 
-        throw new Error("Check the logs for Tweaked Lib errors");
+        throw new RuntimeException("Check the logs");
     }
 
-    private static boolean commonLog(List<ICustomLogger> errorLoggers) {
-        if (errorLoggers.isEmpty()) {
-            return true;
+    private static boolean commonLog(List<ICustomLogger> loggers) {
+        if (loggers.isEmpty()) {
+            return false;
         }
 
-        for (ICustomLogger c : errorLoggers) {
+        for (ICustomLogger c : loggers) {
             loggAll(c);
             c.clean();
         }
-        return false;
+        return true;
+    }
+
+    private static void commonRuntimeCheck(List<ICustomLogger> loggers) {
+        iCustomLoggerPool.forEach(customLogger -> {
+            if (customLogger.runtimeChecks()) {
+                loggers.add(customLogger);
+            }
+        });
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static void loggAll(ICustomLogger customLogger) {
-        logSetting(customLogger);
-        logErrors(customLogger);
-        logErrorsToUserWithCT(customLogger);
+    private static void loggAll(ICustomLogger logger) {
+        logSetting(logger);
+        logErrors(logger);
+        logErrorsToUserWithCT(logger);
     }
 
-    private static void logSetting(ICustomLogger customLogger) {
-        String[] strings = customLogger.getConfigs();
+    private static void logSetting(ICustomLogger logger) {
+        String[] strings = logger.getConfigs();
         if (strings.length == 0) {
             return;
         }
 
-        TweakedLib.LOGGER.info("Configs (" + customLogger.getMODID() + "):");
+        Logger modLogger = logger.getModLogger();
+        modLogger.info("Configs (" + modLogger.getName() + "):");
         for (String s : strings) {
-            TweakedLib.LOGGER.info(s);
+            modLogger.info(s);
         }
 
     }
 
-    private static void logErrors(ICustomLogger customLogger) {
-        TweakedLib.LOGGER.info("Errors (" + customLogger.getMODID() + "):");
-        for (String s : customLogger.getErrors()) {
-            TweakedLib.LOGGER.fatal(s);
+    private static void logErrors(ICustomLogger logger) {
+        Logger modLogger = logger.getModLogger();
+        for (String s : logger.getErrors()) {
+            modLogger.error(s);
         }
     }
 
-    private static void logErrorsToUserWithCT(ICustomLogger customLogger) {
-        if (!customLogger.logErrorToUsersInGameWithCT()) {
-            return;
-        }
-
-        CraftTweakerAPI.logError("Errors (" + customLogger.getMODID() + "):");
-        for (String s : customLogger.getErrors()) {
+    private static void logErrorsToUserWithCT(ICustomLogger logger) {
+        CraftTweakerAPI.logError(logger.getModLogger().getName());
+        for (String s : logger.getErrors()) {
             CraftTweakerAPI.logError(s);
         }
     }

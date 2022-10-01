@@ -1,18 +1,18 @@
 package srki2k.tweakedlib.api.logging.errorlogginglib;
 
+import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 
 public interface ICustomLogger {
 
-    boolean doCustomCheck();
+    boolean startupChecks();
 
-    boolean handleRuntimeErrors();
+    boolean runtimeChecks();
 
     boolean discardLoggerAfterStartup();
 
-    boolean logErrorToUsersInGameWithCT();
-
-    String getMODID();
+    Logger getModLogger();
 
     String[] getConfigs();
 
