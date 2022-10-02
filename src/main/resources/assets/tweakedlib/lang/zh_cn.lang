@@ -1,11 +1,11 @@
 tweakedlib.jei.weight=储层生成权重 %d
 
 tweakedlib.jei.dimensions=维度
-tweakedlib.jei.dimension_whitelist= 维度白名单：%d
-tweakedlib.jei.dimension_blacklist= 维度黑名单：%d
+tweakedlib.jei.dimension_whitelist= §7维度白名单：%d
+tweakedlib.jei.dimension_blacklist= §7维度黑名单：%d
 
 tweakedlib.jei.power_tier=储层能量等级：%d
-tweakedlib.jei.power_capacity= 储层所需能量：%d RF
-tweakedlib.jei.power_usage= 储存消耗能量速率：%d RF/t
+tweakedlib.jei.power_capacity= §7储层所需能量：%d RF
+tweakedlib.jei.power_usage= §7储存消耗能量速率：%d RF/t
 
 tweakedlib.jei.lshift=按住LSHIFT查看更多信息
