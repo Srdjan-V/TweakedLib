@@ -37,8 +37,8 @@ public class BaseHEIUtil {
             ResourceLocation location = new ResourceLocation(modid, "textures/gui/pumpjack.png");
 
             pumpjack = new IDrawable[2];
-            pumpjack[0] = guiHelper.createDrawable(location, 0, 0, 84, 80);
-            pumpjack[1] = guiHelper.createDrawable(location, 85, 0, 102, 17);
+            pumpjack[0] = guiHelper.createDrawable(location, 0, 0, 77, 80);
+            pumpjack[1] = guiHelper.createDrawable(location, 78, 0, 16, 16);
 
             BaseHEIUtil.catalyst[0] = catalyst;
         }
