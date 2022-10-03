@@ -2,6 +2,7 @@ package srki2k.tweakedlib.common;
 
 import net.minecraftforge.common.config.Config;
 import srki2k.tweakedlib.TweakedLib;
+import srki2k.tweakedlib.api.powertier.PowerTierHandler;
 
 public class Configs {
 
@@ -88,6 +89,23 @@ public class Configs {
 
             }
 
+        }
+
+    }
+
+    public static void init() {
+        if (TLConfigs.DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.load && Constants.isTweakedExcavationLoaded()) {
+            PowerTierHandler.registerPowerUsage(
+                    TLConfigs.DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.powerTier,
+                    TLConfigs.DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.capacity,
+                    TLConfigs.DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.rft);
+        }
+
+        if (TLConfigs.DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.load && Constants.isTweakedPetroleumLoaded()) {
+            PowerTierHandler.registerPowerUsage(
+                    TLConfigs.DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.powerTier,
+                    TLConfigs.DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.capacity,
+                    TLConfigs.DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.rft);
         }
 
     }
