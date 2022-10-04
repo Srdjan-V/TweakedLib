@@ -29,7 +29,7 @@ public final class PowerTierHandler {
             TweakedLib.LOGGER.error("PowerTier cant be smaller then 0");
             return false;
         }
-        if (getPowerTier(tier) != null) {
+        if (rftTier.get(tier) != null) {
             TweakedLib.LOGGER.error("PowerTier " + tier + " is already retested");
             return false;
         }
@@ -43,10 +43,10 @@ public final class PowerTierHandler {
      *
      * @param id Power-tier id
      * @return Returns PowerTier
-     * @throws RuntimeException if you try to get a non existed power tier, and runs ErrorLoggingLib.runtimeErrorLogging()
+     * @throws RuntimeException Might throw if you try to get a non-existing power tier
      */
     public static PowerTier getPowerTier(int id) {
-        PowerTier powerTier =rftTier.get(id);
+        PowerTier powerTier = rftTier.get(id);
         if (powerTier == null) {
             ErrorLoggingLib.runtimeErrorLogging();
         }

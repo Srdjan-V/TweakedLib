@@ -34,7 +34,6 @@ public class TweakedLib {
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
         Constants.init();
-        Configs.init();
     }
 
     @Mod.EventHandler
@@ -44,6 +43,7 @@ public class TweakedLib {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        Configs.init();
         ErrorLoggingLib.validateState();
     }
 
