@@ -88,7 +88,7 @@ public final class PowerTierHandler {
     }
 
     /**
-     * Gets gets the number of PowerTier
+     * Gets the number of PowerTier
      *
      * @return Returns int
      */
@@ -97,12 +97,21 @@ public final class PowerTierHandler {
     }
 
     /**
+     * Gets all the PowerTier
+     *
+     * @return Returns PowerTier[]
+     */
+    public static PowerTier[] getAllPowerTiers() {
+        return rftTier.values().toArray(new PowerTier[0]);
+    }
+
+    /**
      * Gets gets the ids of registered PowerTiers
      *
      * @return Returns Integer[]
      */
     public static Integer[] getRegisteredIDDs() {
-        return rftTier.keySet().toArray(new Integer[0]).clone();
+        return rftTier.keySet().toArray(new Integer[0]);
     }
 
     /**
