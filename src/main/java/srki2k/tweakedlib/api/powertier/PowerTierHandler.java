@@ -1,9 +1,12 @@
 package srki2k.tweakedlib.api.powertier;
 
 import blusunrize.immersiveengineering.api.energy.immersiveflux.FluxStorageAdvanced;
+import srki2k.tweakedlib.TweakedLib;
+import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 
 import java.util.HashMap;
 
+@SuppressWarnings("unused")
 public final class PowerTierHandler {
 
     private static final HashMap<Integer, PowerTier> rftTier = new HashMap<>();
@@ -23,9 +26,11 @@ public final class PowerTierHandler {
      */
     public static boolean registerPowerUsage(int tier, int capacity, int rft) {
         if (tier < 0) {
+            TweakedLib.LOGGER.error("PowerTier cant be smaller then 0");
             return false;
         }
         if (getPowerTier(tier) != null) {
+            TweakedLib.LOGGER.error("PowerTier " + tier + " is already retested");
             return false;
         }
 
@@ -38,9 +43,14 @@ public final class PowerTierHandler {
      *
      * @param id Power-tier id
      * @return Returns PowerTier
+     * @throws RuntimeException if you try to get a non existed power tier, and runs ErrorLoggingLib.runtimeErrorLogging()
      */
     public static PowerTier getPowerTier(int id) {
-        return rftTier.get(id);
+        PowerTier powerTier =rftTier.get(id);
+        if (powerTier == null) {
+            ErrorLoggingLib.runtimeErrorLogging();
+        }
+        return powerTier;
     }
 
     /**
@@ -65,8 +75,7 @@ public final class PowerTierHandler {
      * @return If it exists
      */
     public static boolean powerTierExists(int id) {
-        PowerTier powerTier = rftTier.get(id);
-        return powerTier != null;
+        return rftTier.get(id) != null;
     }
 
     /**
@@ -85,6 +94,15 @@ public final class PowerTierHandler {
      */
     public static int getSize() {
         return rftTier.size();
+    }
+
+    /**
+     * Gets gets the ids of registered PowerTiers
+     *
+     * @return Returns Integer[]
+     */
+    public static Integer[] getRegisteredIDDs() {
+        return rftTier.keySet().toArray(new Integer[0]).clone();
     }
 
     /**
