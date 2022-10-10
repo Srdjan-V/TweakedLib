@@ -1,7 +1,6 @@
 package srki2k.tweakedlib.api.powertier;
 
 import blusunrize.immersiveengineering.api.energy.immersiveflux.FluxStorageAdvanced;
-import srki2k.tweakedlib.TweakedLib;
 import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 
 import java.util.HashMap;
@@ -9,32 +8,27 @@ import java.util.HashMap;
 @SuppressWarnings("unused")
 public final class PowerTierHandler {
 
-    private static final HashMap<Integer, PowerTier> rftTier = new HashMap<>();
+    private static final HashMap<Integer, PowerTier> powerTierMap = new HashMap<>();
 
     static {
         //A fallback power tier instead of returning null or power tier 0
-        rftTier.put(-1, new PowerTier(Integer.MAX_VALUE, 0));
+        powerTierMap.put(-1, new PowerTier(Integer.MAX_VALUE, 0));
     }
 
     /**
-     * Sets the PowerTier object associated with the fluid of a given chunk
+     * Registering a PowerTier object
      *
      * @param tier     The tier of the power, must start from 0
      * @param capacity The capacity
      * @param rft      The RF/t
      * @return true if the power tier has been registered false if not
      */
-    public static boolean registerPowerUsage(int tier, int capacity, int rft) {
-        if (tier < 0) {
-            TweakedLib.LOGGER.error("PowerTier cant be smaller then 0");
-            return false;
-        }
-        if (rftTier.get(tier) != null) {
-            TweakedLib.LOGGER.error("PowerTier " + tier + " is already retested");
+    public static boolean registerPowerTier(int tier, int capacity, int rft) {
+        if (powerTierMap.get(tier) != null) {
             return false;
         }
 
-        rftTier.put(tier, new PowerTier(capacity, rft));
+        powerTierMap.put(tier, new PowerTier(capacity, rft));
         return true;
     }
 
@@ -46,7 +40,7 @@ public final class PowerTierHandler {
      * @throws RuntimeException Might throw if you try to get a non-existing power tier
      */
     public static PowerTier getPowerTier(int id) {
-        PowerTier powerTier = rftTier.get(id);
+        PowerTier powerTier = powerTierMap.get(id);
         if (powerTier == null) {
             ErrorLoggingLib.runtimeErrorLogging();
         }
@@ -61,7 +55,7 @@ public final class PowerTierHandler {
      * @return Returns PowerTier
      */
     public static PowerTier getPowerTierWithFallback(int id) {
-        PowerTier powerTier = rftTier.get(id);
+        PowerTier powerTier = powerTierMap.get(id);
         if (powerTier == null) {
             return getFallbackPowerTier();
         }
@@ -75,7 +69,7 @@ public final class PowerTierHandler {
      * @return If it exists
      */
     public static boolean powerTierExists(int id) {
-        return rftTier.get(id) != null;
+        return powerTierMap.get(id) != null;
     }
 
     /**
@@ -84,7 +78,7 @@ public final class PowerTierHandler {
      * @return Returns PowerTier
      */
     public static PowerTier getFallbackPowerTier() {
-        return rftTier.get(-1);
+        return powerTierMap.get(-1);
     }
 
     /**
@@ -93,7 +87,7 @@ public final class PowerTierHandler {
      * @return Returns int
      */
     public static int getSize() {
-        return rftTier.size();
+        return powerTierMap.size();
     }
 
     /**
@@ -102,7 +96,7 @@ public final class PowerTierHandler {
      * @return Returns PowerTier[]
      */
     public static PowerTier[] getAllPowerTiers() {
-        return rftTier.values().toArray(new PowerTier[0]);
+        return powerTierMap.values().toArray(new PowerTier[0]);
     }
 
     /**
@@ -111,7 +105,7 @@ public final class PowerTierHandler {
      * @return Returns Integer[]
      */
     public static Integer[] getRegisteredIDDs() {
-        return rftTier.keySet().toArray(new Integer[0]);
+        return powerTierMap.keySet().toArray(new Integer[0]);
     }
 
     /**
@@ -133,7 +127,7 @@ public final class PowerTierHandler {
      * @param powerTierID PowerTier id
      */
     public static void initFluxStorageWithPowerTierID(FluxStorageAdvanced fluxStorage, int powerTierID) {
-        PowerTier powerTier = rftTier.get(powerTierID);
+        PowerTier powerTier = getPowerTier(powerTierID);
         fluxStorage.setCapacity(powerTier.getCapacity());
         fluxStorage.setLimitReceive(Integer.min(powerTier.getRft() * 2, powerTier.getCapacity()));
         fluxStorage.setMaxExtract(powerTier.getRft());

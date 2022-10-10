@@ -27,7 +27,8 @@ public class Configs {
 
         public static class DefaultMachinePowerTiers {
 
-            @Config.Comment({"If TweakedPetroleum is loaded these configs might load"})
+            @Config.Comment({"If TweakedPetroleum is loaded these configs might load",
+                    "Power tiers registered with ZenScript will still take priority"})
             @Config.Name("Default Pumpjack Power Tiers")
             public static DefaultPumpjackPowerTiers defaultPumpjackPowerTiers;
 
@@ -58,7 +59,8 @@ public class Configs {
 
             }
 
-            @Config.Comment({"If TweakedExcavation is loaded these configs might load"})
+            @Config.Comment({"If TweakedExcavation is loaded these configs might load",
+                    "Power tiers registered with ZenScript will still take priority"})
             @Config.Name("Default Excavator Power Tiers")
             public static DefaultExcavatorPowerTiers defaultExcavatorPowerTiers;
 
@@ -95,14 +97,14 @@ public class Configs {
 
     public static void init() {
         if (TLConfigs.DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.load && Constants.isTweakedExcavationLoaded()) {
-            PowerTierHandler.registerPowerUsage(
+            PowerTierHandler.registerPowerTier(
                     TLConfigs.DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.powerTier,
                     TLConfigs.DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.capacity,
                     TLConfigs.DefaultMachinePowerTiers.DefaultExcavatorPowerTiers.rft);
         }
 
         if (TLConfigs.DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.load && Constants.isTweakedPetroleumLoaded()) {
-            PowerTierHandler.registerPowerUsage(
+            PowerTierHandler.registerPowerTier(
                     TLConfigs.DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.powerTier,
                     TLConfigs.DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.capacity,
                     TLConfigs.DefaultMachinePowerTiers.DefaultPumpjackPowerTiers.rft);

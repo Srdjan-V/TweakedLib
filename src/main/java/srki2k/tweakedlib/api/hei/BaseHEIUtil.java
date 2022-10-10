@@ -19,7 +19,7 @@ import java.util.IllegalFormatException;
 import java.util.List;
 
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "unused"})
 public class BaseHEIUtil {
 
     public static final NumberFormat numberFormat = new DecimalFormat("#,###,###,###.#");
@@ -83,12 +83,12 @@ public class BaseHEIUtil {
     }
 
     public static String detailedDimension(int[] dim) {
-        StringBuilder stringBuilder = new StringBuilder();
-
         int dimLength = dim.length;
         if (dimLength == 0) {
-            return stringBuilder.append("[]").toString();
+            return "[]";
         }
+
+        StringBuilder stringBuilder = new StringBuilder();
 
         int elements = 1;
         foundDim:

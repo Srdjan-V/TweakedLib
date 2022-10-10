@@ -6,14 +6,16 @@ import srki2k.tweakedlib.TweakedLib;
 import srki2k.tweakedlib.common.Configs;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class ErrorLoggingLib {
 
     private ErrorLoggingLib() {
     }
 
-    private static final List<ICustomLogger> iCustomLoggerPool = new ArrayList<>();
+    private static final Set<ICustomLogger> iCustomLoggerPool = new HashSet<>();
 
     public static void addCustomLogger(ICustomLogger customLogger) {
         iCustomLoggerPool.add(customLogger);
