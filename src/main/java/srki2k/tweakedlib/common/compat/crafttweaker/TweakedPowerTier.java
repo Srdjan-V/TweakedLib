@@ -24,13 +24,13 @@ public class TweakedPowerTier {
         }
 
        int powerTier =  PowerTierHandler.registerPowerTier(capacity, rft);
-        if (powerTier != PowerTierHandler.getFallbackPowerTier() && isValid) {
+        if (powerTier != PowerTierHandler.getFallbackPowerTierHashCode() && isValid) {
             CraftTweakerAPI.logInfo("Added powerTier with capacity: " + capacity + " and " + rft + " RF/t");
             return powerTier;
         }
 
         CraftTweakerAPI.logError("Returning FallbackPowerTier");
-        return PowerTierHandler.getFallbackPowerTier();
+        return PowerTierHandler.getFallbackPowerTierHashCode();
     }
 
 }

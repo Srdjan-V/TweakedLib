@@ -113,12 +113,21 @@ public final class PowerTierHandler {
     }
 
     /**
+     * Gets the Fallback PowerTier HashCode
+     *
+     * @return Returns PowerTier
+     */
+    public static int getFallbackPowerTierHashCode() {
+        return fallbackHashCode;
+    }
+
+    /**
      * Gets the Fallback PowerTier
      *
      * @return Returns PowerTier
      */
-    public static int getFallbackPowerTier() {
-        return fallbackHashCode;
+    public static PowerTier getFallbackPowerTier() {
+        return fallback;
     }
 
     /**
