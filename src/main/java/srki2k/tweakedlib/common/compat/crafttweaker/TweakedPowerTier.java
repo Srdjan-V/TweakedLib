@@ -2,38 +2,35 @@ package srki2k.tweakedlib.common.compat.crafttweaker;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;
-import srki2k.tweakedlib.TweakedLib;
 import srki2k.tweakedlib.api.powertier.PowerTierHandler;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+@SuppressWarnings("unused")
 @ZenClass("mods.TweakedLib.TweakedPowerTier")
 @ZenRegister
 public class TweakedPowerTier {
 
     @ZenMethod
-    public static void registerPowerTier(int tier, int capacity, int rft) {
-        if (tier < 0) {
-            CraftTweakerAPI.logError("PowerTier can not be smaller than 0!");
-        }
-        if (capacity < 1) {
-            CraftTweakerAPI.logError("PowerTier capacity can not be smaller than 1!");
-        }
+    public static int registerPowerTier(int capacity, int rft) {
+        boolean isValid = true;
         if (capacity == Integer.MAX_VALUE) {
             CraftTweakerAPI.logError("PowerTier capacity should not be MAX_INT!");
-            capacity--;
+            isValid = false;
         }
         if (capacity < rft) {
             CraftTweakerAPI.logError("PowerTier capacity can not be smaller than rft!");
+            isValid = false;
         }
 
-        if (PowerTierHandler.registerPowerTier(tier, capacity, rft)) {
-            CraftTweakerAPI.logInfo("Added power tier: " + tier + " with capacity: " + capacity + " and " + rft + " RF/t");
-            return;
+       int powerTier =  PowerTierHandler.registerPowerTier(capacity, rft);
+        if (powerTier != PowerTierHandler.getFallbackPowerTier() && isValid) {
+            CraftTweakerAPI.logInfo("Added powerTier with capacity: " + capacity + " and " + rft + " RF/t");
+            return powerTier;
         }
 
-        CraftTweakerAPI.logError("PowerTier " + tier + " is already retested");
-
+        CraftTweakerAPI.logError("Returning FallbackPowerTier");
+        return PowerTierHandler.getFallbackPowerTier();
     }
 
 }

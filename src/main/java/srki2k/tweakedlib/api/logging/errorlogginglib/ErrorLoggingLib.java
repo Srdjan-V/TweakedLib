@@ -41,7 +41,7 @@ public final class ErrorLoggingLib {
 
     }
 
-    public static void runtimeErrorLogging() {
+    public static void runtimeErrorLogging() throws PowerTierNotFound {
         List<ICustomLogger> loggers = new ArrayList<>();
         commonRuntimeCheck(loggers);
 
@@ -50,7 +50,7 @@ public final class ErrorLoggingLib {
             return;
         }
 
-        throw new RuntimeException("Check the logs");
+        throw new PowerTierNotFound("Check the logs");
     }
 
     private static boolean commonLog(List<ICustomLogger> loggers) {

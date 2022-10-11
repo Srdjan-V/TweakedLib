@@ -8,12 +8,12 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import srki2k.tweakedlib.common.Configs;
-import srki2k.tweakedlib.common.Constants;
-import srki2k.tweakedlib.common.powertierlogging.PowerTierLogging;
-import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
+import srki2k.tweakedlib.api.powertier.PowerTierHandler;
+import srki2k.tweakedlib.common.Constants;
+import srki2k.tweakedlib.common.powertierlogging.PowerTierLogging;
 
 @Mod(modid = TweakedLib.MODID,
         version = TweakedLib.VERSION,
@@ -43,7 +43,7 @@ public class TweakedLib {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        Configs.init();
+        PowerTierHandler.recalculateTiers();
         ErrorLoggingLib.validateState();
     }
 
