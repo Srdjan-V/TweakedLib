@@ -9,6 +9,8 @@ import srki2k.tweakedlib.api.powertier.PowerTierHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import static srki2k.tweakedlib.common.Configs.TLConfigs.Logging.logMissingPowerTier;
+
 public class PowerTierLogging implements ICustomLogger {
 
     public static void RegisterLogger() {
@@ -43,17 +45,9 @@ public class PowerTierLogging implements ICustomLogger {
 
     @Override
     public String[] getConfigs() {
-        String[] strings = new String[8];
+        String[] strings = new String[1];
 
-        strings[0] = "Default Pumpjack Power Tiers:";
-/*        strings[1] = "Load these configs" + DefaultPumpjackPowerTiers.load;
-        strings[2] = "Power Tier ID" + DefaultPumpjackPowerTiers.capacity;
-        strings[3] = "Default consumption" + DefaultPumpjackPowerTiers.rft;
-
-        strings[4] = "Default Excavator Power Tiers:";
-        strings[5] = "Load these configs" + DefaultExcavatorPowerTiers.load;
-        strings[6] = "Power Tier ID" + DefaultExcavatorPowerTiers.capacity;
-        strings[7] = "Default consumption" + DefaultExcavatorPowerTiers.rft;*/
+        strings[0] = "Logging: " + logMissingPowerTier;
 
         return strings;
     }
