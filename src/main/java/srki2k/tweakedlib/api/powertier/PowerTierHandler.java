@@ -64,6 +64,17 @@ public final class PowerTierHandler {
     }
 
     /**
+     * Gets the PowerTier object associated with the id,
+     * if it's not existing return the fallback PowerTier
+     *
+     * @param id Power-tier id
+     * @return Returns PowerTier
+     */
+    public static PowerTier getPowerTierWithFallback(int id) {
+        return powerTierMap.getOrDefault(id, fallback);
+    }
+
+    /**
      * Gets the Tier of the specified PowerTier object,
      * if it's not existing it will throw PowerTierNotFound exception
      *
@@ -78,17 +89,6 @@ public final class PowerTierHandler {
         }
 
         return powerTierList.indexOf(powerTier);
-    }
-
-    /**
-     * Gets the PowerTier object associated with the id,
-     * if it's not existing return the fallback PowerTier
-     *
-     * @param id Power-tier id
-     * @return Returns PowerTier
-     */
-    public static PowerTier getPowerTierWithFallback(int id) {
-        return powerTierMap.getOrDefault(id, fallback);
     }
 
     /**

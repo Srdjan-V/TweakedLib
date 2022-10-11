@@ -154,7 +154,7 @@ public class BaseHEIUtil {
     }
 
     public static void powerTierListData(List<String> list, int powerTier) {
-        list.add(translateToLocalFormatted("tweakedlib.jei.power_tier", powerTier));
+        list.add(translateToLocalFormatted("tweakedlib.jei.power_tier", BaseHEIUtil.numberFormat.format(PowerTierHandler.getTierOfSpecifiedPowerTier(powerTier))));
         list.add(translateToLocalFormatted("tweakedlib.jei.power_capacity", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity())));
         list.add(translateToLocalFormatted("tweakedlib.jei.power_usage", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft())));
     }
