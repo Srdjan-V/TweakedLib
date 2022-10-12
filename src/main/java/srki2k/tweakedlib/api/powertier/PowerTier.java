@@ -34,6 +34,6 @@ public final class PowerTier implements Comparable<PowerTier> {
 
     @Override
     public int compareTo(PowerTier o) {
-        return (capacity * rft / 2) - (o.getCapacity() * o.getRft() / 2);
+        return (int) (((long) capacity * rft / 2) - ((long) o.getCapacity() * o.getRft() / 2));
     }
 }
