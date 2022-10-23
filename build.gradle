@@ -17,6 +17,11 @@ plugins {
     id 'wtf.gofancy.fancygradle' version '1.1.+'
 }
 
+if (project.use_mixins.toBoolean()) {
+    apply plugin 'org.spongepowered.mixin'
+}
+
+
 apply {
     plugin 'net.minecraftforge.gradle'
     plugin 'java'
@@ -54,7 +59,7 @@ minecraft {
     }
     runs {
         client {
-            workingDirectory project.file('run/client')
+            workingDirectory project.file('run')
             if (project.use_coremod.toBoolean()) {
                 jvmArg '-Dfml.coreMods.load=' + coremod_plugin_class_name
             }
@@ -69,7 +74,7 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run/server')
+            workingDirectory project.file('run')
             if (project.use_coremod.toBoolean()) {
                 jvmArg '-Dfml.coreMods.load=' + coremod_plugin_class_name
             }
@@ -126,8 +131,12 @@ dependencies {
 
     compileOnly 'mezz.jei:jei_1.12.2:4.16.1.302:api'
 
-    compileOnly('zone.rong:mixinbooter:5.0')
-    runtimeOnly('zone.rong:mixinbooter:5.0')
+    if (project.use_mixins.toBoolean()) {
+        compileOnly('zone.rong:mixinbooter:5.0')
+        runtimeOnly('zone.rong:mixinbooter:5.0')
+
+        annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    }
 
 }
 
