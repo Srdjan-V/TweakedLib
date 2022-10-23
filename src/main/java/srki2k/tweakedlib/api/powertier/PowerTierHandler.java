@@ -24,7 +24,7 @@ public final class PowerTierHandler {
         //A fallback power tier instead of returning null or power tier 0
         fallback = new PowerTier(Integer.MAX_VALUE, 0);
         fallbackHashCode = fallback.hashCode();
-        powerTierMap.put(fallback.hashCode(), fallback);
+        powerTierMap.put(fallbackHashCode, fallback);
     }
 
     public static void recalculateTiers() {
@@ -44,7 +44,7 @@ public final class PowerTierHandler {
         int hash = powerTier.hashCode();
 
         powerTierMap.put(hash, powerTier);
-        return powerTier.hashCode();
+        return hash;
     }
 
     /**

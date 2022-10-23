@@ -23,7 +23,7 @@ public class TweakedPowerTier {
             isValid = false;
         }
 
-       int powerTier =  PowerTierHandler.registerPowerTier(capacity, rft);
+        int powerTier = PowerTierHandler.registerPowerTier(capacity, rft);
         if (powerTier != PowerTierHandler.getFallbackPowerTierHashCode() && isValid) {
             CraftTweakerAPI.logInfo("Added powerTier with capacity: " + capacity + " and " + rft + " RF/t");
             return powerTier;

@@ -34,7 +34,7 @@ public final class ErrorLoggingLib {
             commonRuntimeCheck(loggers);
         }
 
-        commonLog(loggers);
+        commonLog(loggers, false);
 
         //Remove startup error loggers, and keep only runtime
         iCustomLoggerPool.removeIf(ICustomLogger::discardLoggerAfterStartup);
@@ -45,17 +45,31 @@ public final class ErrorLoggingLib {
         List<ICustomLogger> loggers = new ArrayList<>();
         commonRuntimeCheck(loggers);
 
-        if (!commonLog(loggers)) {
+        if (!commonLog(loggers, true)) {
             TweakedLib.LOGGER.warn("Runtime error reporting was called, but no errors where found");
             return;
         }
 
-        throw new PowerTierNotFound("Check the logs");
+        List<String> errors = new ArrayList<>();
+
+        for (ICustomLogger logger : loggers) {
+            errors.addAll(logger.getErrors());
+            logger.clean();//prevent memory leak with loliasm/vanilafix installed
+        }
+
+        throw new PowerTierNotFound(errors);
     }
 
-    private static boolean commonLog(List<ICustomLogger> loggers) {
+    private static boolean commonLog(List<ICustomLogger> loggers, boolean isRuntime) {
         if (loggers.isEmpty()) {
             return false;
+        }
+
+        if (isRuntime) {
+            for (ICustomLogger c : loggers) {
+                logSetting(c);
+            }
+            return true;
         }
 
         for (ICustomLogger c : loggers) {
