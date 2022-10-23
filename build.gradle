@@ -1,39 +1,28 @@
 buildscript {
     repositories {
         maven {
+            name 'ForgeGradle'
+            url = 'https://maven.minecraftforge.net'
+        }
+
+        maven {
             name 'MixinGradle'
             url 'https://repo.spongepowered.org/repository/maven-public'
         }
     }
     dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3.4'
         if (project.use_mixins.toBoolean()) {
             classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
         }
     }
 }
 
-plugins {
-    id 'net.minecraftforge.gradle' version '5.1.+'
-    id 'wtf.gofancy.fancygradle' version '1.1.+'
-}
-
-if (project.use_mixins.toBoolean()) {
-    apply plugin 'org.spongepowered.mixin'
-}
-
-
 apply {
-    plugin 'net.minecraftforge.gradle'
-    plugin 'java'
+    plugin 'net.minecraftforge.gradle.forge'
     plugin 'idea'
-}
-
-fancyGradle {
-    patches {
-        resources
-        coremods
-        asm
-        codeChickenLib
+    if (project.use_mixins.toBoolean()) {
+        plugin 'org.spongepowered.mixin'
     }
 }
 
@@ -41,7 +30,11 @@ version = project.mod_version
 group = project.maven_group
 archivesBaseName = project.archives_base_name
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+sourceCompatibility = targetCompatibility = '1.8'
+
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
 
 idea {
     module {
@@ -51,44 +44,25 @@ idea {
 }
 
 minecraft {
-
-    mappings channel: 'stable', version: '39-1.12'
-
-    if (project.has_access_transformer.toBoolean()) {
-        accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    version = '1.12.2-14.23.5.2847'
+    runDir = 'run'
+    mappings = 'stable_39'
+    def args = []
+    if (project.use_coremod.toBoolean()) {
+        args << '-Dfml.coreMods.load=' + coremod_plugin_class_name
     }
-    runs {
-        client {
-            workingDirectory project.file('run')
-            if (project.use_coremod.toBoolean()) {
-                jvmArg '-Dfml.coreMods.load=' + coremod_plugin_class_name
-            }
-            if (project.use_mixins.toBoolean()) {
-                jvmArg '-Dmixin.hotSwap=true'
-                jvmArg '-Dmixin.checks.interfaces=true'
-                jvmArg '-Dmixin.debug=true'
-            }
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            environment 'MC_VERSION', '1.12.2'
-        }
-
-        server {
-            workingDirectory project.file('run')
-            if (project.use_coremod.toBoolean()) {
-                jvmArg '-Dfml.coreMods.load=' + coremod_plugin_class_name
-            }
-            if (project.use_mixins.toBoolean()) {
-                jvmArg '-Dmixin.hotSwap=true'
-                jvmArg '-Dmixin.checks.interfaces=true'
-            }
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            environment 'MC_VERSION', '1.12.2'
-        }
+    if (project.use_mixins.toBoolean()) {
+        args << '-Dmixin.hotSwap=true'
+        args << '-Dmixin.checks.interfaces=true'
+        args << '-Dmixin.debug.export=true'
     }
+    clientJvmArgs.addAll(args)
+    serverJvmArgs.addAll(args)
+
+    replace("@VERSION@", project.mod_version)
+    replaceIn("TweakedLib.java")
+
 }
-
 
 repositories {
     maven {
@@ -100,16 +74,9 @@ repositories {
     maven {
         name 'jared maven'
         url 'https://maven.blamejared.com/'
-        content {
-            includeGroup "CraftTweaker2"
-            includeGroup "blusunrize"
-        }
     }
     maven {
         url "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
     }
     maven {
         // location of the maven that hosts JEI files
@@ -119,54 +86,28 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
-    compileOnly 'CraftTweaker2:CraftTweaker2-API:4.1.20.679'
-    runtimeOnly 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.679'
-    compileOnly fg.deobf('curse.maven:ImmersiveEngineering-231951:2974106')
+    deobfCompile 'CraftTweaker2:CraftTweaker2-API:4.1.20.679'
+    runtime 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.679'
+    deobfCompile 'curse.maven:ImmersiveEngineering-231951:2974106'
 
     //AdvancedRocketry
-    compileOnly fg.deobf('curse.maven:AdvancedRocketry-236542:3801020')
-    compileOnly fg.deobf('curse.maven:Libvulpes-236541:3801015')
+    deobfCompile 'curse.maven:AdvancedRocketry-236542:3801020'
+    deobfCompile 'curse.maven:Libvulpes-236541:3801015'
 
     compileOnly 'mezz.jei:jei_1.12.2:4.16.1.302:api'
 
     if (project.use_mixins.toBoolean()) {
         compileOnly('zone.rong:mixinbooter:5.0')
         runtimeOnly('zone.rong:mixinbooter:5.0')
-
-        annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
     }
 
 }
 
-
 sourceSets {
     main {
-        if (project.use_mixins.toBoolean()) {
-            ext.refMap = 'mixins.' + archives_base_name + '.refmap.json'
-        }
-
-        java {
-            srcDirs = ["src/main/java"]
-        }
-
-        resources {
-            srcDirs = ["src/main/java", "src/main/resources"]
-        }
+        ext.refMap = 'mixins.' + archives_base_name + '.refmap.json'
     }
-
-    test {
-        java {
-            srcDirs = ["src/test/java"]
-        }
-        resources {
-            srcDirs = ["src/test/resources"]
-        }
-    }
-
-    // at compile time, put resources in same directories as classes
-    main.output.setResourcesDir(main.java.classesDirectory)
 }
 
 
@@ -189,20 +130,6 @@ jar {
 }
 
 jar.finalizedBy('reobfJar')
-
-
-import org.apache.tools.ant.filters.ReplaceTokens
-
-task filterTokens(type: Sync) {
-
-    inputs.property 'version', version
-
-    from sourceSets.main.java
-    filter(ReplaceTokens, tokens: [VERSION: version.toString()])
-    into "$buildDir/src/$sourceSets.main.name/$sourceSets.main.java.name"
-}
-
-compileJava.source = filterTokens.outputs
 
 processResources {
     // required to allow file expansion later
@@ -228,29 +155,29 @@ processResources {
 if (project.build_deobfJar.toBoolean()) {
     // Create deobf dev jars
     task deobfJar(type: Jar) {
-        archiveClassifier.set("deobf")
         from sourceSets.main.output
+        classifier = 'deobf'
     }
 }
 
 if (project.build_apiJar.toBoolean()) {
     // Create API library jar
     task apiZip(type: Jar) {
-        archiveClassifier.set("api")
         from(sourceSets.main.java) {
             include "name/api/**"
         }
         from(sourceSets.main.output) {
             include "name/api/**"
         }
+        classifier = 'api'
     }
 }
 
 if (project.build_sourceJar.toBoolean()) {
     // Create source jar
     task sourcesJar(type: Jar) {
-        archiveClassifier.set("sources")
         from sourceSets.main.allJava
+        classifier = 'sources'
     }
 }
 
