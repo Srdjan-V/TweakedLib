@@ -11,11 +11,11 @@ public class GroovyScriptCompat extends ModPropertyContainer {
 
     private static ModSupport.Container<GroovyScriptCompat> modSupportContainer;
 
-    public static void init() {
-        if (!Constants.isGroovyScriptLoaded()) {
-            return;
+    public static ModSupport.Container<GroovyScriptCompat> getInstance() {
+        if (modSupportContainer == null && Constants.isGroovyScriptLoaded()) {
+            modSupportContainer = new ModSupport.Container<>(TweakedLib.MODID, "TweakedMods", GroovyScriptCompat::new);
         }
-        modSupportContainer = new ModSupport.Container<>(TweakedLib.MODID, "TweakedMods", GroovyScriptCompat::new);
+        return modSupportContainer;
     }
 
     @Override
@@ -29,10 +29,6 @@ public class GroovyScriptCompat extends ModPropertyContainer {
 
     public static boolean isCurrentlyRunning() {
         return Constants.isGroovyScriptLoaded() && GroovyScript.getSandbox().isRunning();
-    }
-
-    public static GroovyScriptCompat getInstance() {
-        return Constants.isGroovyScriptLoaded() ? modSupportContainer.get() : null;
     }
 
 }
