@@ -125,6 +125,8 @@ dependencies {
     runtimeOnly 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.679'
     compileOnly fg.deobf('curse.maven:ImmersiveEngineering-231951:2974106')
 
+    compileOnly fg.deobf('curse.maven:GroovyScript-687577:4033033')
+
     //AdvancedRocketry
     compileOnly fg.deobf('curse.maven:AdvancedRocketry-236542:3801020')
     compileOnly fg.deobf('curse.maven:Libvulpes-236541:3801015')

@@ -9,11 +9,14 @@ public class Constants {
     private static boolean TweakedPetroleumLoaded;
     private static boolean TweakedPetroleumGasLoaded;
 
+    private static boolean GroovyScriptLoaded;
+
     public static void init() {
         AdvancedRocketryLoaded = Loader.isModLoaded("advancedrocketry");
         TweakedExcavationLoaded = Loader.isModLoaded("tweakedexcavation");
         TweakedPetroleumLoaded = Loader.isModLoaded("tweakedpetroleum");
         TweakedPetroleumGasLoaded = Loader.isModLoaded("tweakedpetroleumgas");
+        GroovyScriptLoaded = Loader.isModLoaded("groovyscript");
     }
 
     public static boolean isAdvancedRocketryLoaded() {
@@ -30,5 +33,9 @@ public class Constants {
 
     public static boolean isTweakedPetroleumGasLoaded() {
         return TweakedPetroleumGasLoaded;
+    }
+
+    public static boolean isGroovyScriptLoaded() {
+        return GroovyScriptLoaded;
     }
 }
