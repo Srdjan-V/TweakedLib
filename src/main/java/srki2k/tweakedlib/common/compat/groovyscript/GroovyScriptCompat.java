@@ -11,15 +11,15 @@ public class GroovyScriptCompat extends ModPropertyContainer {
 
     private static ModSupport.Container<GroovyScriptCompat> modSupportContainer;
 
-    public static ModSupport.Container<GroovyScriptCompat> getInstance() {
-        if (modSupportContainer == null && Constants.isGroovyScriptLoaded()) {
+    public static GroovyScriptCompat getInstance() {
+        if (modSupportContainer == null) {
             modSupportContainer = new ModSupport.Container<>(TweakedLib.MODID, "TweakedMods", GroovyScriptCompat::new);
         }
-        return modSupportContainer;
+        return modSupportContainer.get();
     }
 
     @Override
-    protected void addRegistry(VirtualizedRegistry<?> registry) {
+    public void addRegistry(VirtualizedRegistry<?> registry) {
         super.addRegistry(registry);
     }
 
