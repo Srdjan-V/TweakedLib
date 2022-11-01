@@ -34,6 +34,7 @@ fancyGradle {
         coremods
         asm
         codeChickenLib
+        mergetool
     }
 }
 
@@ -147,23 +148,6 @@ sourceSets {
     main {
         if (project.use_mixins.toBoolean()) {
             ext.refMap = 'mixins.' + archives_base_name + '.refmap.json'
-        }
-
-        java {
-            srcDirs = ["src/main/java"]
-        }
-
-        resources {
-            srcDirs = ["src/main/java", "src/main/resources"]
-        }
-    }
-
-    test {
-        java {
-            srcDirs = ["src/test/java"]
-        }
-        resources {
-            srcDirs = ["src/test/resources"]
         }
     }
 

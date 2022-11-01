@@ -19,7 +19,7 @@ public class PowerTierNotFound extends RuntimeException {
         for (String error : missingPowerTiers) {
             stringBuilder.append("    ").append(error).append(System.lineSeparator());
         }
-        return stringBuilder.toString();
 
+        return stringBuilder.toString();
     }
 }
