@@ -44,6 +44,14 @@ public final class PowerTierHandler {
         return hash;
     }
 
+
+    /**
+     * Registering a PowerTier object
+     *
+     * @param capacity The capacity, must be greater than rft
+     * @param rft      The RF/t, must start from 1
+     * @return the created object
+     */
     public static PowerTier registerPowerTierAndReturnPowerTierObject(int capacity, int rft) {
         PowerTier powerTier = new PowerTier(capacity, rft);
         int hash = powerTier.hashCode();
@@ -55,7 +63,7 @@ public final class PowerTierHandler {
 
     private static void reportPowerTierRegistration(PowerTier powerTier, int hash) {
         if (powerTierMap.get(hash) == null) {
-            TweakedLib.LOGGER.info("Restated a new PowerTier with ID: {}", hash);
+            TweakedLib.LOGGER.info("Registering a new PowerTier with ID: {}", hash);
             powerTierMap.put(hash, powerTier);
             powerTierTreeSet.add(powerTier);
         } else {
@@ -142,11 +150,18 @@ public final class PowerTierHandler {
         return powerTierMap.get(id) != null;
     }
 
+    /**
+     * It will try to unRegisterPowerTier the specified powerTier
+     * @return true of it has successfully unregistered specified powerTier
+     */
     public static boolean unRegisterPowerTier(int id) {
         PowerTier powerTier = powerTierMap.remove(id);
         if (powerTier != null) {
+            TweakedLib.LOGGER.info("Unregistering PowerTier with ID: {}", powerTier.hashCode());
             powerTierTreeSet.remove(powerTier);
             return true;
+        } else  {
+            TweakedLib.LOGGER.warn("Trying to unregister PowerTier with ID: {}, but it was not found in the registry", id);
         }
         return false;
     }
@@ -196,6 +211,10 @@ public final class PowerTierHandler {
         return powerTierMap.keySet().toArray(new Integer[0]);
     }
 
+
+    /**
+     * Clears the PowerTiers registry
+     */
     public static void clearPowerTiers() {
         TweakedLib.LOGGER.info("Clearing Power Tier Map");
         powerTierMap.clear();
