@@ -1,4 +1,4 @@
-package srki2k.tweakedlib.common.util;
+package srki2k.tweakedlib.util;
 
 import net.minecraftforge.fml.common.Loader;
 

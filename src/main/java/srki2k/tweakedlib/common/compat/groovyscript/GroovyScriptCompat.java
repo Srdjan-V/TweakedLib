@@ -3,8 +3,8 @@ package srki2k.tweakedlib.common.compat.groovyscript;
 import com.cleanroommc.groovyscript.compat.mods.ModPropertyContainer;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import srki2k.tweakedlib.TweakedLib;
-import srki2k.tweakedlib.common.util.groovyscript.GroovyScriptModSupportContainerWrapper;
-import srki2k.tweakedlib.common.util.Constants;
+import srki2k.tweakedlib.util.groovyscript.GroovyScriptModSupportContainerWrapper;
+import srki2k.tweakedlib.util.Constants;
 
 public class GroovyScriptCompat extends ModPropertyContainer {
 

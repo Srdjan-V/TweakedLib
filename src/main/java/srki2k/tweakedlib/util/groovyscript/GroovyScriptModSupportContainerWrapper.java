@@ -1,10 +1,10 @@
-package srki2k.tweakedlib.common.util.groovyscript;
+package srki2k.tweakedlib.util.groovyscript;
 
 import com.cleanroommc.groovyscript.compat.mods.ModPropertyContainer;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.google.common.base.Supplier;
 import srki2k.tweakedlib.TweakedLib;
-import srki2k.tweakedlib.common.util.Constants;
+import srki2k.tweakedlib.util.Constants;
 
 @SuppressWarnings("unused")
 public class GroovyScriptModSupportContainerWrapper {
