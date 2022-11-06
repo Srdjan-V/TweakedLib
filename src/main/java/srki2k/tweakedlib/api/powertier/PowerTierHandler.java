@@ -24,6 +24,7 @@ public final class PowerTierHandler {
         //A fallback power tier instead of returning null or power tier 0
         fallbackPowerTier = new PowerTier(Integer.MAX_VALUE, 0);
         fallbackHashCode = fallbackPowerTier.hashCode();
+        TweakedLib.LOGGER.info("Registering Fallback PowerTier, ID: {}", fallbackHashCode);
         powerTierMap.put(fallbackHashCode, fallbackPowerTier);
         powerTierTreeSet.add(fallbackPowerTier);
     }
@@ -63,7 +64,7 @@ public final class PowerTierHandler {
 
     private static void reportPowerTierRegistration(PowerTier powerTier, int hash) {
         if (powerTierMap.get(hash) == null) {
-            TweakedLib.LOGGER.info("Registering a new PowerTier with ID: {}", hash);
+            TweakedLib.LOGGER.info("Registering a new PowerTier with ID: {}, Capacity: {}, RF/t: {}", hash, powerTier.getCapacity(), powerTier.getRft());
             powerTierMap.put(hash, powerTier);
             powerTierTreeSet.add(powerTier);
         } else {
@@ -152,6 +153,7 @@ public final class PowerTierHandler {
 
     /**
      * It will try to unRegisterPowerTier the specified powerTier
+     *
      * @return true of it has successfully unregistered specified powerTier
      */
     public static boolean unRegisterPowerTier(int id) {
@@ -160,7 +162,7 @@ public final class PowerTierHandler {
             TweakedLib.LOGGER.info("Unregistering PowerTier with ID: {}", powerTier.hashCode());
             powerTierTreeSet.remove(powerTier);
             return true;
-        } else  {
+        } else {
             TweakedLib.LOGGER.warn("Trying to unregister PowerTier with ID: {}, but it was not found in the registry", id);
         }
         return false;
