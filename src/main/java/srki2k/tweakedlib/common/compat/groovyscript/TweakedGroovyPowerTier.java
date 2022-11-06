@@ -88,7 +88,7 @@ public final class TweakedGroovyPowerTier extends VirtualizedRegistry<PowerTier>
 
         @Override
         public PowerTier register() {
-            if (!validate()) {
+            if (validate()) {
                 PowerTier powerTier = PowerTierHandler.registerPowerTierAndReturnPowerTierObject(capacity, rft);
                 instance.addScripted(powerTier);
                 return powerTier;
