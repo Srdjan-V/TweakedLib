@@ -11,9 +11,7 @@ public class GroovyScriptCompat extends ModPropertyContainer {
     private static ModSupport.Container<GroovyScriptCompat> modSupportContainer;
 
     public static void init() {
-        if (Constants.isGroovyScriptLoaded()) {
-            modSupportContainer = GroovyScriptModSupportContainerWrapper.registerGroovyContainer(TweakedLib.MODID, "TweakedMods", GroovyScriptCompat::new);
-        }
+        modSupportContainer = GroovyScriptModSupportContainerWrapper.registerGroovyContainer(TweakedLib.MODID, "TweakedMods", GroovyScriptCompat::new);
     }
 
     private GroovyScriptCompat() {

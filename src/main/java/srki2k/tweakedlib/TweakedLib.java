@@ -34,7 +34,9 @@ public class TweakedLib {
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
         Constants.init();
-        GroovyScriptCompat.init();
+        if (Constants.isGroovyScriptLoaded()) {
+            GroovyScriptCompat.init();
+        }
     }
 
     @Mod.EventHandler
