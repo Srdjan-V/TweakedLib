@@ -9,7 +9,7 @@ import net.minecraft.world.DimensionType;
 import org.lwjgl.input.Keyboard;
 import srki2k.tweakedlib.TweakedLib;
 import srki2k.tweakedlib.api.powertier.PowerTierHandler;
-import srki2k.tweakedlib.common.Constants;
+import srki2k.tweakedlib.common.util.Constants;
 import zmaster587.advancedRocketry.dimension.DimensionManager;
 
 import java.text.DecimalFormat;

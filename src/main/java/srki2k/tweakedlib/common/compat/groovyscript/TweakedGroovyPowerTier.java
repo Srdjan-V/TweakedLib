@@ -6,18 +6,14 @@ import com.cleanroommc.groovyscript.helper.recipe.IRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import srki2k.tweakedlib.api.powertier.PowerTier;
 import srki2k.tweakedlib.api.powertier.PowerTierHandler;
-import srki2k.tweakedlib.common.Constants;
 
 @SuppressWarnings("unused")
 public final class TweakedGroovyPowerTier extends VirtualizedRegistry<PowerTier> {
     private static TweakedGroovyPowerTier instance;
 
     @GroovyBlacklist
-    public static void init() {
-        if (Constants.isGroovyScriptLoaded() && instance == null) {
-            instance = new TweakedGroovyPowerTier();
-            GroovyScriptCompat.getInstance().addRegistry(instance);
-        }
+    static TweakedGroovyPowerTier init() {
+        return instance = new TweakedGroovyPowerTier();
     }
 
     private TweakedGroovyPowerTier() {
@@ -35,7 +31,7 @@ public final class TweakedGroovyPowerTier extends VirtualizedRegistry<PowerTier>
         for (PowerTier powerTier : PowerTierHandler.getAllPowerTiers()) {
             addBackup(powerTier);
         }
-        PowerTierHandler.clearPowerTierList();
+        PowerTierHandler.clearPowerTiers();
     }
 
     public void remove(int id) {
@@ -86,12 +82,7 @@ public final class TweakedGroovyPowerTier extends VirtualizedRegistry<PowerTier>
             msg.add(rft <= 0,
                     () -> "PowerTier rf/t can not be smaller than 1!");
 
-            if (msg.hasSubMessages()) {
-                msg.add("Returning Fallback Power Tier");
-                msg.post();
-                return true;
-            }
-            return false;
+            return !msg.postIfNotEmpty();
         }
 
 
@@ -103,7 +94,7 @@ public final class TweakedGroovyPowerTier extends VirtualizedRegistry<PowerTier>
                 return powerTier;
             }
 
-            return PowerTierHandler.getFallbackPowerTier();
+            return null;
         }
     }
 

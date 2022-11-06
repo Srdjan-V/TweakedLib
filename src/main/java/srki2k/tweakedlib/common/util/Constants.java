@@ -1,7 +1,8 @@
-package srki2k.tweakedlib.common;
+package srki2k.tweakedlib.common.util;
 
 import net.minecraftforge.fml.common.Loader;
 
+@SuppressWarnings("unused")
 public class Constants {
 
     private static boolean AdvancedRocketryLoaded;
