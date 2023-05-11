@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import srki2k.Tags;
 import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 import srki2k.tweakedlib.api.powertier.PowerTierHandler;
 import srki2k.tweakedlib.common.Constants;
@@ -20,7 +21,7 @@ import srki2k.tweakedlib.common.powertierlogging.PowerTierLogging;
         name = "Tweaked Lib")
 public class TweakedLib {
     public static final String MODID = "tweakedlib";
-    public static final String VERSION = "@VERSION@";
+    public static final String VERSION = Tags.VERSION;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     @SubscribeEvent
