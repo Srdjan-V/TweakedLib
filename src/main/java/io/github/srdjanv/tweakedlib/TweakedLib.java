@@ -1,5 +1,8 @@
-package srki2k.tweakedlib;
+package io.github.srdjanv.tweakedlib;
 
+import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
+import io.github.srdjanv.tweakedlib.common.Constants;
+import io.github.srdjanv.tweakedlib.common.powertierlogging.PowerTierLogging;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -11,10 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import srki2k.Tags;
-import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
-import srki2k.tweakedlib.api.powertier.PowerTierHandler;
-import srki2k.tweakedlib.common.Constants;
-import srki2k.tweakedlib.common.powertierlogging.PowerTierLogging;
 
 @Mod(modid = TweakedLib.MODID,
         version = TweakedLib.VERSION,
@@ -44,7 +43,6 @@ public class TweakedLib {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        PowerTierHandler.recalculateTiers();
         ErrorLoggingLib.validateState();
     }
 

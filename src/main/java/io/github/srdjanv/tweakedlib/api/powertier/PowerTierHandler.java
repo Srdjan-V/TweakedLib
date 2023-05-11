@@ -1,35 +1,30 @@
-package srki2k.tweakedlib.api.powertier;
+package io.github.srdjanv.tweakedlib.api.powertier;
 
 import blusunrize.immersiveengineering.api.energy.immersiveflux.FluxStorageAdvanced;
-import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
-import srki2k.tweakedlib.api.logging.errorlogginglib.PowerTierNotFound;
+import io.github.srdjanv.tweakedlib.TweakedLib;
+import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
+import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.PowerTierNotFound;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public final class PowerTierHandler {
 
     private static final HashMap<Integer, PowerTier> powerTierMap = new HashMap<>();
 
-    private static final List<PowerTier> powerTierList = new ArrayList<>();
+    private static final Set<PowerTier> powerTierTreeSet = new TreeSet<>();
 
-    private static final PowerTier fallback;
+    private static final PowerTier fallbackPowerTier;
 
     private static final int fallbackHashCode;
 
     static {
         //A fallback power tier instead of returning null or power tier 0
-        fallback = new PowerTier(Integer.MAX_VALUE, 0);
-        fallbackHashCode = fallback.hashCode();
-        powerTierMap.put(fallbackHashCode, fallback);
-    }
-
-    public static void recalculateTiers() {
-        powerTierList.clear();
-        powerTierList.addAll(powerTierMap.values().stream().sorted().collect(Collectors.toList()));
+        fallbackPowerTier = new PowerTier(Integer.MAX_VALUE, 0);
+        fallbackHashCode = fallbackPowerTier.hashCode();
+        TweakedLib.LOGGER.info("Registering Fallback PowerTier, ID: {}", fallbackHashCode);
+        powerTierMap.put(fallbackHashCode, fallbackPowerTier);
+        powerTierTreeSet.add(fallbackPowerTier);
     }
 
     /**
@@ -43,9 +38,36 @@ public final class PowerTierHandler {
         PowerTier powerTier = new PowerTier(capacity, rft);
         int hash = powerTier.hashCode();
 
-        powerTierMap.put(hash, powerTier);
+        reportingPowerTierRegistration(powerTier, hash);
         return hash;
     }
+
+
+    /**
+     * Registering a PowerTier object
+     *
+     * @param capacity The capacity, must be greater than rft
+     * @param rft The RF/t, must start from 1
+     * @return the created object
+     */
+    public static PowerTier registerPowerTierAndReturnPowerTierObject(int capacity, int rft) {
+        PowerTier powerTier = new PowerTier(capacity, rft);
+        int hash = powerTier.hashCode();
+
+        reportingPowerTierRegistration(powerTier, hash);
+        return powerTier;
+    }
+
+    private static void reportingPowerTierRegistration(PowerTier powerTier, int hash) {
+        if (powerTierMap.get(hash) == null) {
+            TweakedLib.LOGGER.info("Registering a new PowerTier with ID: {}, Capacity: {}, RF/t: {}", hash, powerTier.getCapacity(), powerTier.getRft());
+            powerTierMap.put(hash, powerTier);
+            powerTierTreeSet.add(powerTier);
+        } else {
+            TweakedLib.LOGGER.info("PowerTier with ID: {} already exists, returning existing PowerTier object", hash);
+        }
+    }
+
 
     /**
      * Gets the PowerTier object associated with the id
@@ -71,8 +93,9 @@ public final class PowerTierHandler {
      * @return Returns PowerTier
      */
     public static PowerTier getPowerTierWithFallback(int id) {
-        return powerTierMap.getOrDefault(id, fallback);
+        return powerTierMap.getOrDefault(id, fallbackPowerTier);
     }
+
 
     /**
      * Gets the Tier of the specified PowerTier object,
@@ -83,12 +106,7 @@ public final class PowerTierHandler {
      * @throws PowerTierNotFound Might throw if you try to get a non-existing power tier
      */
     public static int getTierOfSpecifiedPowerTier(int id) throws PowerTierNotFound {
-        PowerTier powerTier = powerTierMap.get(id);
-        if (powerTier == null) {
-            ErrorLoggingLib.runtimeErrorLogging();
-        }
-
-        return powerTierList.indexOf(powerTier);
+        return indexOf(id, false);
     }
 
     /**
@@ -99,8 +117,25 @@ public final class PowerTierHandler {
      * @return Returns PowerTier
      */
     public static int getTierOfSpecifiedPowerTierWithFallback(int id) {
-        return powerTierList.indexOf(powerTierMap.getOrDefault(id, fallback));
+        return indexOf(id, true);
     }
+
+    private static int indexOf(int id, boolean fallback) throws PowerTierNotFound {
+        int index = 0;
+        for (PowerTier powertier : powerTierTreeSet) {
+            if (powertier.hashCode() == id) {
+                return index;
+            }
+            index++;
+        }
+
+        if (!fallback) {
+            ErrorLoggingLib.runtimeErrorLogging();
+        }
+
+        return 0;
+    }
+
 
     /**
      * returns if that PowerTier object exists
@@ -113,12 +148,20 @@ public final class PowerTierHandler {
     }
 
     /**
-     * Gets the Fallback PowerTier HashCode
+     * It will try to unRegisterPowerTier the specified powerTier
      *
-     * @return Returns PowerTier
+     * @return true of it has successfully unregistered specified powerTier
      */
-    public static int getFallbackPowerTierHashCode() {
-        return fallbackHashCode;
+    public static boolean unRegisterPowerTier(int id) {
+        PowerTier powerTier = powerTierMap.remove(id);
+        if (powerTier != null) {
+            TweakedLib.LOGGER.info("Unregistering PowerTier with ID: {}", powerTier.hashCode());
+            powerTierTreeSet.remove(powerTier);
+            return true;
+        } else {
+            TweakedLib.LOGGER.warn("Trying to unregister PowerTier with ID: {}, but it was not found in the registry", id);
+        }
+        return false;
     }
 
     /**
@@ -127,7 +170,16 @@ public final class PowerTierHandler {
      * @return Returns PowerTier
      */
     public static PowerTier getFallbackPowerTier() {
-        return fallback;
+        return fallbackPowerTier;
+    }
+
+    /**
+     * Gets the Fallback PowerTier HashCode
+     *
+     * @return Returns PowerTier
+     */
+    public static int getFallbackPowerTierHashCode() {
+        return fallbackHashCode;
     }
 
     /**
@@ -153,8 +205,22 @@ public final class PowerTierHandler {
      *
      * @return Returns Integer[]
      */
-    public static Integer[] getRegisteredIDDs() {
+    public static Integer[] getRegisteredIDs() {
         return powerTierMap.keySet().toArray(new Integer[0]);
+    }
+
+
+    /**
+     * Clears the PowerTiers registry
+     */
+    public static void clearPowerTiers() {
+        TweakedLib.LOGGER.info("Clearing Power Tier Map");
+        powerTierMap.clear();
+        powerTierMap.put(fallbackHashCode, fallbackPowerTier);
+
+        TweakedLib.LOGGER.info("Clearing Power Tier TreeSet");
+        powerTierTreeSet.clear();
+        powerTierTreeSet.add(fallbackPowerTier);
     }
 
     /**
@@ -181,5 +247,4 @@ public final class PowerTierHandler {
         fluxStorage.setLimitReceive(Integer.min(powerTier.getRft() * 2, powerTier.getCapacity()));
         fluxStorage.setMaxExtract(powerTier.getRft());
     }
-
 }

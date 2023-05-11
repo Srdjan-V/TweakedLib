@@ -1,5 +1,6 @@
-package srki2k.tweakedlib.api.hei;
+package io.github.srdjanv.tweakedlib.api.hei;
 
+import io.github.srdjanv.tweakedlib.common.Constants;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import net.minecraft.item.ItemStack;
@@ -7,9 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.DimensionType;
 import org.lwjgl.input.Keyboard;
-import srki2k.tweakedlib.TweakedLib;
-import srki2k.tweakedlib.api.powertier.PowerTierHandler;
-import srki2k.tweakedlib.common.Constants;
+import io.github.srdjanv.tweakedlib.TweakedLib;
+import io.github.srdjanv.tweakedlib.api.powertier.PowerTierHandler;
 import zmaster587.advancedRocketry.dimension.DimensionManager;
 
 import java.text.DecimalFormat;

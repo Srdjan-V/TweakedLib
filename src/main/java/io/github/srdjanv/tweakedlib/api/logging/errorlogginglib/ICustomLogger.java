@@ -1,4 +1,4 @@
-package srki2k.tweakedlib.api.logging.errorlogginglib;
+package io.github.srdjanv.tweakedlib.api.logging.errorlogginglib;
 
 import org.apache.logging.log4j.Logger;
 

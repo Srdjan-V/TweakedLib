@@ -1,7 +1,7 @@
-package srki2k.tweakedlib.common;
+package io.github.srdjanv.tweakedlib.common;
 
+import io.github.srdjanv.tweakedlib.TweakedLib;
 import net.minecraftforge.common.config.Config;
-import srki2k.tweakedlib.TweakedLib;
 
 public class Configs {
 

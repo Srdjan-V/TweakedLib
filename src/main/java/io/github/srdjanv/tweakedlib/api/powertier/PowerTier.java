@@ -1,4 +1,4 @@
-package srki2k.tweakedlib.api.powertier;
+package io.github.srdjanv.tweakedlib.api.powertier;
 
 import java.util.Objects;
 

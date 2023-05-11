@@ -1,8 +1,8 @@
-package srki2k.tweakedlib.common.compat.crafttweaker;
+package io.github.srdjanv.tweakedlib.common.compat.crafttweaker;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;
-import srki2k.tweakedlib.api.powertier.PowerTierHandler;
+import io.github.srdjanv.tweakedlib.api.powertier.PowerTierHandler;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 

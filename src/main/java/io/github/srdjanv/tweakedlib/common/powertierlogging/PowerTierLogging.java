@@ -1,15 +1,15 @@
-package srki2k.tweakedlib.common.powertierlogging;
+package io.github.srdjanv.tweakedlib.common.powertierlogging;
 
+import io.github.srdjanv.tweakedlib.TweakedLib;
+import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
+import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ICustomLogger;
 import org.apache.logging.log4j.Logger;
-import srki2k.tweakedlib.TweakedLib;
-import srki2k.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
-import srki2k.tweakedlib.api.logging.errorlogginglib.ICustomLogger;
-import srki2k.tweakedlib.api.powertier.PowerTierHandler;
+import io.github.srdjanv.tweakedlib.api.powertier.PowerTierHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static srki2k.tweakedlib.common.Configs.TLConfigs.Logging.logMissingPowerTier;
+import static io.github.srdjanv.tweakedlib.common.Configs.TLConfigs.Logging.logMissingPowerTier;
 
 public class PowerTierLogging implements ICustomLogger {
 
@@ -17,7 +17,7 @@ public class PowerTierLogging implements ICustomLogger {
         ErrorLoggingLib.addCustomLogger(new PowerTierLogging());
     }
 
-    List<String> errors = new ArrayList<>();
+    private List<String> errors = new ArrayList<>();
 
     @Override
     public boolean startupChecks() {

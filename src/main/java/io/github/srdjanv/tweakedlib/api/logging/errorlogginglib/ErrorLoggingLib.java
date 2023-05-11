@@ -1,9 +1,9 @@
-package srki2k.tweakedlib.api.logging.errorlogginglib;
+package io.github.srdjanv.tweakedlib.api.logging.errorlogginglib;
 
 import crafttweaker.CraftTweakerAPI;
+import io.github.srdjanv.tweakedlib.TweakedLib;
 import org.apache.logging.log4j.Logger;
-import srki2k.tweakedlib.TweakedLib;
-import srki2k.tweakedlib.common.Configs;
+import io.github.srdjanv.tweakedlib.common.Configs;
 
 import java.util.ArrayList;
 import java.util.HashSet;
