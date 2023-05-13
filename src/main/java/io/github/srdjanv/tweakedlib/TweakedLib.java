@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import srki2k.Tags;
+import srki2k.tweakedlib.Tags;
 
 @Mod(modid = TweakedLib.MODID,
         version = TweakedLib.VERSION,

@@ -140,14 +140,14 @@ public class BaseHEIUtil {
     public static void dimensionListData(List<String> list, int[] dimensionWhitelist, int[] dimensionBlacklist) {
         list.add(translateToLocalFormatted("tweakedlib.jei.dimensions"));
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-            list.add(translateToLocalFormatted("tweakedlib.jei.dimension_whitelist", detailedDimension(dimensionWhitelist)));
-            list.add(translateToLocalFormatted("tweakedlib.jei.dimension_blacklist", detailedDimension(dimensionBlacklist)));
+            list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.dimension_whitelist", detailedDimension(dimensionWhitelist)));
+            list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.dimension_blacklist", detailedDimension(dimensionBlacklist)));
 
             return;
         }
 
-        list.add(translateToLocalFormatted("tweakedlib.jei.dimension_whitelist", Arrays.toString(dimensionWhitelist)));
-        list.add(translateToLocalFormatted("tweakedlib.jei.dimension_blacklist", Arrays.toString(dimensionBlacklist)));
+        list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.dimension_whitelist", Arrays.toString(dimensionWhitelist)));
+        list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.dimension_blacklist", Arrays.toString(dimensionBlacklist)));
 
         list.add("");
         list.add(translateToLocalFormatted("tweakedlib.jei.lshift"));
@@ -155,8 +155,8 @@ public class BaseHEIUtil {
 
     public static void powerTierListData(List<String> list, int powerTier) {
         list.add(translateToLocalFormatted("tweakedlib.jei.power_tier", BaseHEIUtil.numberFormat.format(PowerTierHandler.getTierOfSpecifiedPowerTier(powerTier))));
-        list.add(translateToLocalFormatted("tweakedlib.jei.power_capacity", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity())));
-        list.add(translateToLocalFormatted("tweakedlib.jei.power_usage", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft())));
+        list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.power_capacity", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity())));
+        list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.power_usage", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft())));
     }
 
     public static String translateToLocal(String key) {

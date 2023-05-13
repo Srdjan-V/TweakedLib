@@ -1,0 +1,10 @@
+{
+  "minVersion": "0.8",
+  "package": "io.github.srdjanv.tweakedlib.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "IEEnergyInfoProviderMixin"
+  ],
+  "client": [],
+  "server": []
+}
