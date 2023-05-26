@@ -5,10 +5,12 @@ import java.util.Objects;
 public final class PowerTier implements Comparable<PowerTier> {
     private final int capacity;
     private final int rft;
+    private final int id;
 
     public PowerTier(int capacity, int rft) {
         this.capacity = capacity;
         this.rft = rft;
+        this.id = Objects.hash(capacity, rft);
     }
 
     public int getCapacity() {
@@ -17,6 +19,10 @@ public final class PowerTier implements Comparable<PowerTier> {
 
     public int getRft() {
         return rft;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
@@ -29,7 +35,7 @@ public final class PowerTier implements Comparable<PowerTier> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(capacity, rft);
+        return id;
     }
 
     @Override
