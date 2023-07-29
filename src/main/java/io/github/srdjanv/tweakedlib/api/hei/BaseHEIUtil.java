@@ -3,6 +3,7 @@ package io.github.srdjanv.tweakedlib.api.hei;
 import io.github.srdjanv.tweakedlib.common.Constants;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
@@ -157,6 +158,14 @@ public class BaseHEIUtil {
         list.add(translateToLocalFormatted("tweakedlib.jei.power_tier", BaseHEIUtil.numberFormat.format(PowerTierHandler.getTierOfSpecifiedPowerTier(powerTier))));
         list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.power_capacity", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity())));
         list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.power_usage", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft())));
+    }
+
+    public static void drawPowerTier(Minecraft minecraft, int x, int y, int powerTier) {
+        minecraft.fontRenderer.drawString(String.valueOf(PowerTierHandler.getTierOfSpecifiedPowerTier(powerTier)), x, y, 15658734);
+    }
+
+    public static void drawSpawnWeight(Minecraft minecraft, int x, int y, int weight) {
+        minecraft.fontRenderer.drawString(String.valueOf(weight), x, y, 15658734);
     }
 
     public static String translateToLocal(String key) {
