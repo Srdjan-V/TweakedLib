@@ -2,11 +2,13 @@ package io.github.srdjanv.tweakedlib;
 
 import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 import io.github.srdjanv.tweakedlib.common.Constants;
+import io.github.srdjanv.tweakedlib.common.compat.groovyscript.GroovyScriptRegistry;
 import io.github.srdjanv.tweakedlib.common.powertierlogging.PowerTierLogging;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -16,8 +18,9 @@ import org.apache.logging.log4j.Logger;
 
 @Mod(modid = TweakedLib.MODID,
         version = TweakedLib.VERSION,
-        name = "Tweaked Lib")
+        name = TweakedLib.NAME)
 public class TweakedLib {
+    public static final String NAME = "Tweaked Lib";
     public static final String MODID = "tweakedlib";
     public static final String VERSION = Tags.VERSION;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
@@ -27,6 +30,11 @@ public class TweakedLib {
         if (event.getModID().equals(MODID)) {
             ConfigManager.sync(MODID, net.minecraftforge.common.config.Config.Type.INSTANCE);
         }
+    }
+
+    @Mod.EventHandler
+    public void construct(FMLConstructionEvent event) {
+        GroovyScriptRegistry.init();
     }
 
     @Mod.EventHandler

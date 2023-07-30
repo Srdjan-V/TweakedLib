@@ -81,16 +81,25 @@ repositories {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
+    ivy {
+        url 'https://github.com/'
+        patternLayout {
+            artifact '[organisation]/[module]/releases/download/v[revision]/[module]-[revision]-[classifier].[ext]'
+        }
+
+        metadataSources { artifact() }
+    }
     mavenLocal()
 }
 
 configurations {
     embed
     implementation.extendsFrom(embed)
+    source
 }
 
 dependencies {
-    implementation 'org.jetbrains:annotations:24.0.1'
+    compileOnly 'org.jetbrains:annotations:24.0.1'
     //Hwyla
     implementation "curse.maven:hwyla-253449:2568751-sources-2568752-api-2568753"
     //implementation "curse.maven:top-245211:2667280"
@@ -98,6 +107,10 @@ dependencies {
 
     compileOnly 'CraftTweaker2:CraftTweaker2-API:4.1.20.679'
     runtimeOnly 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.679'
+
+    implementation 'CleanroomMC:GroovyScript:0.5.2:dev@jar'
+    source 'CleanroomMC:GroovyScript:0.5.2:sources@jar'
+
     compileOnly rfg.deobf('curse.maven:ImmersiveEngineering-231951:2974106')
 
     //AdvancedRocketry

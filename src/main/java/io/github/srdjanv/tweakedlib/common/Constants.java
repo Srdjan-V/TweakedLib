@@ -10,6 +10,8 @@ public class Constants {
     private static boolean TweakedPetroleumGasLoaded;
     private static boolean TheOneProbeLoaded;
     private static boolean WailaLoaded;
+    private static boolean GroovyScriptLoaded;
+
     public static void init() {
         AdvancedRocketryLoaded = Loader.isModLoaded("advancedrocketry");
         TweakedExcavationLoaded = Loader.isModLoaded("tweakedexcavation");
@@ -17,6 +19,7 @@ public class Constants {
         TweakedPetroleumGasLoaded = Loader.isModLoaded("tweakedpetroleumgas");
         TheOneProbeLoaded = Loader.isModLoaded("theoneprobe");
         WailaLoaded = Loader.isModLoaded("waila");
+        GroovyScriptLoaded = Loader.isModLoaded("groovyscript");
     }
 
     public static boolean isAdvancedRocketryLoaded() {
@@ -41,5 +44,9 @@ public class Constants {
 
     public static boolean isWailaLoaded() {
         return WailaLoaded;
+    }
+
+    public static boolean isGroovyScriptLoaded() {
+        return GroovyScriptLoaded;
     }
 }
