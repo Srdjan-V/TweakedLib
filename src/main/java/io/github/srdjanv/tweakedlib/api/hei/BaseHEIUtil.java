@@ -161,11 +161,17 @@ public class BaseHEIUtil {
     }
 
     public static void drawPowerTier(Minecraft minecraft, int x, int y, int powerTier) {
-        minecraft.fontRenderer.drawString(String.valueOf(PowerTierHandler.getTierOfSpecifiedPowerTier(powerTier)), x, y, 15658734);
+        var tier = String.valueOf(PowerTierHandler.getTierOfSpecifiedPowerTier(powerTier));
+        if (minecraft.fontRenderer.getStringWidth(tier) > 12) {
+            minecraft.fontRenderer.drawString(tier.substring(0, Math.min(2, tier.length())) + "...", x, y, 15658734);
+        } else minecraft.fontRenderer.drawString(tier, x, y, 15658734);
     }
 
     public static void drawSpawnWeight(Minecraft minecraft, int x, int y, int weight) {
-        minecraft.fontRenderer.drawString(String.valueOf(weight), x, y, 15658734);
+        var stringWeight = String.valueOf(weight);
+        if (minecraft.fontRenderer.getStringWidth(stringWeight) > 12) {
+            minecraft.fontRenderer.drawString(stringWeight.substring(0, Math.min(2, stringWeight.length())) + "...", x, y, 15658734);
+        } else minecraft.fontRenderer.drawString(stringWeight, x, y, 15658734);
     }
 
     public static String translateToLocal(String key) {
