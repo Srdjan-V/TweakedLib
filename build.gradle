@@ -43,6 +43,7 @@ minecraft {
     useDependencyAccessTransformers = true
 
     injectedTags.put("VERSION", project.version)
+    injectedTags.put("GROOVY_SCRIPT_VERSION", project.groovy_script_version)
 }
 
 // Generate a my.project.Tags class with the version number as a field
@@ -108,8 +109,8 @@ dependencies {
     compileOnly 'CraftTweaker2:CraftTweaker2-API:4.1.20.679'
     runtimeOnly 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.679'
 
-    implementation 'CleanroomMC:GroovyScript:0.5.2:dev@jar'
-    source 'CleanroomMC:GroovyScript:0.5.2:sources@jar'
+    implementation "CleanroomMC:GroovyScript:${project.groovy_script_version}:dev@jar"
+    source "CleanroomMC:GroovyScript:${project.groovy_script_version}:sources@jar"
 
     compileOnly rfg.deobf('curse.maven:ImmersiveEngineering-231951:2974106')
 

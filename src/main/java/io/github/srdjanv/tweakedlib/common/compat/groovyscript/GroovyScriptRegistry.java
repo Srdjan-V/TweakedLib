@@ -12,6 +12,7 @@ public class GroovyScriptRegistry extends ModPropertyContainer {
     public static void init() {
         if (Constants.isGroovyScriptLoaded()) {
             registry = new GroovyScriptRegistry();
+            registry.addRegistry(new GroovyPowerTier());
             new ModSupport.Container<>(TweakedLib.MODID, TweakedLib.NAME, () -> registry, "TweakedMods", "tweakedMods", "tweakedmods");
         }
     }

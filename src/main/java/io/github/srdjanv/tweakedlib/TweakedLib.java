@@ -16,9 +16,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.text.html.HTML;
+
 @Mod(modid = TweakedLib.MODID,
         version = TweakedLib.VERSION,
-        name = TweakedLib.NAME)
+        name = TweakedLib.NAME,
+        dependencies = "after:groovyscript@[" + Tags.GROOVY_SCRIPT_VERSION + ",)")
 public class TweakedLib {
     public static final String NAME = "Tweaked Lib";
     public static final String MODID = "tweakedlib";
@@ -34,13 +37,13 @@ public class TweakedLib {
 
     @Mod.EventHandler
     public void construct(FMLConstructionEvent event) {
+        Constants.init();
         GroovyScriptRegistry.init();
     }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        Constants.init();
     }
 
     @Mod.EventHandler
