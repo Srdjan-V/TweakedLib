@@ -1,8 +1,8 @@
 package io.github.srdjanv.tweakedlib.api.waila;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.tileentity.TileEntity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public final class WallaOverwriteManager {
@@ -19,7 +19,7 @@ public final class WallaOverwriteManager {
     private WallaOverwriteManager() {
     }
 
-    private final Map<Class<?>, IWailaIEBodyOverwrite> wailaBodyRegistry = new HashMap<>();
+    private final Map<Class<?>, IWailaIEBodyOverwrite> wailaBodyRegistry = new Object2ObjectOpenHashMap<>();
 
     public void registerBodyOverwrite(Class<?> clazz, IWailaIEBodyOverwrite overwrite) {
         wailaBodyRegistry.put(clazz, overwrite);
@@ -34,7 +34,7 @@ public final class WallaOverwriteManager {
         return null;
     }
 
-    private final Map<Class<?>, IWailaIENBTDataOverwrite> wailaNBTRegistry = new HashMap<>();
+    private final Map<Class<?>, IWailaIENBTDataOverwrite> wailaNBTRegistry = new Object2ObjectOpenHashMap<>();
 
     public void registerNBTDataOverwrite(Class<?> clazz, IWailaIENBTDataOverwrite overwrite) {
         wailaNBTRegistry.put(clazz, overwrite);

@@ -10,4 +10,4 @@ tweakedlib.jei.power_usage=Machine power usage: %d RF/t
 
 tweakedlib.jei.lshift=Hold LShift for more info
 
-tweakedlib.hud.current_power=Current power: %d RF/t
+tweakedlib.hud.power_tier=Power Tier: %d
