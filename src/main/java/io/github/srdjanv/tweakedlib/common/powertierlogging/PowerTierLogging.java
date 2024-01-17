@@ -3,6 +3,7 @@ package io.github.srdjanv.tweakedlib.common.powertierlogging;
 import io.github.srdjanv.tweakedlib.TweakedLib;
 import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ICustomLogger;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.apache.logging.log4j.Logger;
 import io.github.srdjanv.tweakedlib.api.powertier.PowerTierHandler;
 
@@ -13,11 +14,7 @@ import static io.github.srdjanv.tweakedlib.common.Configs.TLConfigs.Logging.logM
 
 public class PowerTierLogging implements ICustomLogger {
 
-    public static void RegisterLogger() {
-        ErrorLoggingLib.addCustomLogger(new PowerTierLogging());
-    }
-
-    private List<String> errors = new ArrayList<>();
+    private List<String> errors = new ObjectArrayList<>();
 
     @Override
     public boolean startupChecks() {

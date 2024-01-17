@@ -2,6 +2,7 @@ package io.github.srdjanv.tweakedlib.api.logging.errorlogginglib;
 
 import crafttweaker.CraftTweakerAPI;
 import io.github.srdjanv.tweakedlib.TweakedLib;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import org.apache.logging.log4j.Logger;
 import io.github.srdjanv.tweakedlib.common.Configs;
 
@@ -15,7 +16,7 @@ public final class ErrorLoggingLib {
     private ErrorLoggingLib() {
     }
 
-    private static final Set<ICustomLogger> iCustomLoggerPool = new HashSet<>();
+    private static final Set<ICustomLogger> iCustomLoggerPool = new ObjectAVLTreeSet<>();
 
     public static void addCustomLogger(ICustomLogger customLogger) {
         iCustomLoggerPool.add(customLogger);
@@ -38,7 +39,6 @@ public final class ErrorLoggingLib {
 
         //Remove startup error loggers, and keep only runtime
         iCustomLoggerPool.removeIf(ICustomLogger::discardLoggerAfterStartup);
-
     }
 
     public static void runtimeErrorLogging() throws PowerTierNotFound {

@@ -82,21 +82,12 @@ repositories {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
-    ivy {
-        url 'https://github.com/'
-        patternLayout {
-            artifact '[organisation]/[module]/releases/download/v[revision]/[module]-[revision]-[classifier].[ext]'
-        }
-
-        metadataSources { artifact() }
-    }
     mavenLocal()
 }
 
 configurations {
     embed
     implementation.extendsFrom(embed)
-    source
 }
 
 dependencies {
@@ -109,8 +100,7 @@ dependencies {
     compileOnly 'CraftTweaker2:CraftTweaker2-API:4.1.20.679'
     runtimeOnly 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.679'
 
-    implementation "CleanroomMC:GroovyScript:${project.groovy_script_version}:dev@jar"
-    source "CleanroomMC:GroovyScript:${project.groovy_script_version}:sources@jar"
+    implementation "com.cleanroommc:groovyscript:${project.groovy_script_version}"
 
     compileOnly rfg.deobf('curse.maven:ImmersiveEngineering-231951:2974106')
 
