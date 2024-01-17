@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
+@FunctionalInterface
 public interface IWailaIEBodyOverwrite {
     List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config);
 }
