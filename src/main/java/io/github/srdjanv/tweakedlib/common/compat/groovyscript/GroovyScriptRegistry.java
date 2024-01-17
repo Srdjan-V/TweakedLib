@@ -3,12 +3,8 @@ package io.github.srdjanv.tweakedlib.common.compat.groovyscript;
 import com.cleanroommc.groovyscript.api.GroovyPlugin;
 import com.cleanroommc.groovyscript.compat.mods.GroovyContainer;
 import com.cleanroommc.groovyscript.compat.mods.ModPropertyContainer;
-import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import io.github.srdjanv.tweakedlib.TweakedLib;
-import io.github.srdjanv.tweakedlib.common.Constants;
-import io.github.srdjanv.tweakedlib.integration.IInitializer;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

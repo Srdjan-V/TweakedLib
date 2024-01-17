@@ -1,8 +1,8 @@
 package io.github.srdjanv.tweakedlib;
 
+import io.github.srdjanv.tweakedlib.api.integration.DiscoveryHandler;
 import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 import io.github.srdjanv.tweakedlib.common.Constants;
-import io.github.srdjanv.tweakedlib.integration.DiscoveryHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;

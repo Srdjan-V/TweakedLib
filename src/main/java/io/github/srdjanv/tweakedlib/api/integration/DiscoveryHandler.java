@@ -1,19 +1,16 @@
-package io.github.srdjanv.tweakedlib.integration;
+package io.github.srdjanv.tweakedlib.api.integration;
 
 import io.github.srdjanv.tweakedlib.TweakedLib;
 import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
 import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ICustomLogger;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -51,7 +48,9 @@ public class DiscoveryHandler {
             try {
                 Class<?> clazz = Class.forName(data.getClassName().replace('/', '.'));
                 //noinspection unchecked
-                action.accept((T) clazz.getDeclaredConstructor().newInstance());
+                Constructor<T> constructor = (Constructor<T>) clazz.getDeclaredConstructor();
+                constructor.setAccessible(true);
+                action.accept(constructor.newInstance());
             } catch (ClassNotFoundException | InstantiationException e) {
                 TweakedLib.LOGGER.error("Could not initialize class '{}'", data.getClassName());
             } catch (Throwable e) {

@@ -1,4 +1,4 @@
-package io.github.srdjanv.tweakedlib.integration;
+package io.github.srdjanv.tweakedlib.api.integration;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
