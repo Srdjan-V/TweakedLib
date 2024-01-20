@@ -38,17 +38,17 @@ public class TweakedLib {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        DiscoveryHandler.getInstance().preInit(MODID, event);
+        DiscoveryHandler.getInstance().preInit(event);
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        DiscoveryHandler.getInstance().init(MODID, event);
+        DiscoveryHandler.getInstance().init(event);
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        DiscoveryHandler.getInstance().postInit(MODID, event);
+        DiscoveryHandler.getInstance().postInit(event);
         ErrorLoggingLib.validateState();
     }
 

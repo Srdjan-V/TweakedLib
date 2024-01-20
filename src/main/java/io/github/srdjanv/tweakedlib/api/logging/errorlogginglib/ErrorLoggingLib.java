@@ -3,6 +3,7 @@ package io.github.srdjanv.tweakedlib.api.logging.errorlogginglib;
 import crafttweaker.CraftTweakerAPI;
 import io.github.srdjanv.tweakedlib.TweakedLib;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.apache.logging.log4j.Logger;
 import io.github.srdjanv.tweakedlib.common.Configs;
 
@@ -16,14 +17,16 @@ public final class ErrorLoggingLib {
     private ErrorLoggingLib() {
     }
 
-    private static final Set<ICustomLogger> iCustomLoggerPool = new ObjectAVLTreeSet<>();
+    private static final List<ICustomLogger> iCustomLoggerPool = new ObjectArrayList<>();
 
     public static void addCustomLogger(ICustomLogger customLogger) {
         iCustomLoggerPool.add(customLogger);
+        TweakedLib.LOGGER.info("Registered:'{}', class impl:'{}'",
+                ICustomLogger.class.getSimpleName(), customLogger.getClass().getName());
     }
 
     public static void validateState() {
-        List<ICustomLogger> loggers = new ArrayList<>();
+        List<ICustomLogger> loggers = new ObjectArrayList<>();
 
         iCustomLoggerPool.forEach(customLogger -> {
             if (customLogger.startupChecks()) {
@@ -42,7 +45,7 @@ public final class ErrorLoggingLib {
     }
 
     public static void runtimeErrorLogging() throws PowerTierNotFound {
-        List<ICustomLogger> loggers = new ArrayList<>();
+        List<ICustomLogger> loggers = new ObjectArrayList<>();
         commonRuntimeCheck(loggers);
 
         if (!commonLog(loggers, true)) {
@@ -50,7 +53,7 @@ public final class ErrorLoggingLib {
             return;
         }
 
-        List<String> errors = new ArrayList<>();
+        List<String> errors = new ObjectArrayList<>();
 
         for (ICustomLogger logger : loggers) {
             errors.addAll(logger.getErrors());
