@@ -63,6 +63,8 @@ public class DiscoveryHandler {
                 action.accept(constructor.newInstance());
             } catch (ClassNotFoundException | InstantiationException e) {
                 TweakedLib.LOGGER.error("Could not initialize class '{}'", data.getClassName());
+            } catch (NoClassDefFoundError e) {
+                TweakedLib.LOGGER.debug("Could not initialize class '{}'", data.getClassName(), e);
             } catch (Throwable e) {
                 throw new RuntimeException(e);
             }
