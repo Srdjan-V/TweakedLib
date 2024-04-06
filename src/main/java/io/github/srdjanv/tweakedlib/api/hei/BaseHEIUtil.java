@@ -85,9 +85,7 @@ public class BaseHEIUtil {
 
     public static String detailedDimension(int[] dim) {
         int dimLength = dim.length;
-        if (dimLength == 0) {
-            return "[]";
-        }
+        if (dimLength == 0) return "[]";
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -137,27 +135,26 @@ public class BaseHEIUtil {
         return stringBuilder.append("Wrong dimension id or Missing integration").toString();
     }
 
-
     public static void dimensionListData(List<String> list, int[] dimensionWhitelist, int[] dimensionBlacklist) {
-        list.add(translateToLocalFormatted("tweakedlib.jei.dimensions"));
+        list.add(translateToLocal("tweakedlib.jei.dimensions"));
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-            list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.dimension_whitelist", detailedDimension(dimensionWhitelist)));
-            list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.dimension_blacklist", detailedDimension(dimensionBlacklist)));
+            list.add(" §7" + translateToLocal("tweakedlib.jei.dimension_whitelist") + " " + detailedDimension(dimensionWhitelist));
+            list.add(" §7" + translateToLocal("tweakedlib.jei.dimension_blacklist") + " " + detailedDimension(dimensionBlacklist));
 
             return;
         }
 
-        list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.dimension_whitelist", Arrays.toString(dimensionWhitelist)));
-        list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.dimension_blacklist", Arrays.toString(dimensionBlacklist)));
+        list.add(" §7" + translateToLocal("tweakedlib.jei.dimension_whitelist") + " " + Arrays.toString(dimensionWhitelist));
+        list.add(" §7" + translateToLocal("tweakedlib.jei.dimension_blacklist") + " " + Arrays.toString(dimensionBlacklist));
 
         list.add("");
-        list.add(translateToLocalFormatted("tweakedlib.jei.lshift"));
+        list.add(translateToLocal("tweakedlib.jei.lshift"));
     }
 
     public static void powerTierListData(List<String> list, int powerTier) {
-        list.add(translateToLocalFormatted("tweakedlib.jei.power_tier", BaseHEIUtil.numberFormat.format(PowerTierHandler.getTierOfSpecifiedPowerTier(powerTier))));
-        list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.power_capacity", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity())));
-        list.add(" §7" + translateToLocalFormatted("tweakedlib.jei.power_usage", BaseHEIUtil.numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft())));
+        list.add(translateToLocal("tweakedlib.jei.power_tier") + " " + numberFormat.format(PowerTierHandler.getTierOfSpecifiedPowerTier(powerTier)));
+        list.add(" §7" + translateToLocal("tweakedlib.jei.power_capacity") + " " + numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getCapacity()));
+        list.add(" §7" + translateToLocal("tweakedlib.jei.power_usage") + " " + numberFormat.format(PowerTierHandler.getPowerTier(powerTier).getRft()));
     }
 
     public static void drawPowerTier(Minecraft minecraft, int x, int y, int powerTier) {
@@ -178,6 +175,7 @@ public class BaseHEIUtil {
         return I18n.canTranslate(key) ? I18n.translateToLocal(key) : I18n.translateToFallback(key);
     }
 
+    @Deprecated
     public static String translateToLocalFormatted(String key, Object... format) {
         String s = translateToLocal(key);
 
