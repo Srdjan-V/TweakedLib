@@ -1,9 +1,9 @@
 package io.github.srdjanv.tweakedlib.mixin;
 
 import blusunrize.immersiveengineering.common.util.compat.waila.IEWailaDataProvider;
+import io.github.srdjanv.tweakedlib.api.waila.IEWallaOverwriteManager;
 import io.github.srdjanv.tweakedlib.api.waila.IWailaIEBodyOverwrite;
 import io.github.srdjanv.tweakedlib.api.waila.IWailaIENBTDataOverwrite;
-import io.github.srdjanv.tweakedlib.api.waila.WallaOverwriteManager;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -26,7 +26,7 @@ public class IEWailaDataProviderMixin {
     private void tweakedLib$getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config, CallbackInfoReturnable<List<String>> cir) {
         var tile = accessor.getTileEntity();
         if (tile != null) {
-            IWailaIEBodyOverwrite overwrite = WallaOverwriteManager.getInstance().getBodyOverwrite(tile);
+            IWailaIEBodyOverwrite overwrite = IEWallaOverwriteManager.getInstance().getIEBodyOverwrite(tile);
             if (overwrite != null) {
                 cir.setReturnValue(overwrite.getWailaBody(itemStack, currenttip, accessor, config));
             }
@@ -36,7 +36,7 @@ public class IEWailaDataProviderMixin {
     @Inject(method = "getNBTData", at = @At("HEAD"), cancellable = true)
     private void tweakedLib$getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos, CallbackInfoReturnable<NBTTagCompound> cir) {
         if (te != null) {
-            IWailaIENBTDataOverwrite overwrite = WallaOverwriteManager.getInstance().getNBTDataOverwrite(te);
+            IWailaIENBTDataOverwrite overwrite = IEWallaOverwriteManager.getInstance().getIENBTDataOverwrite(te);
             if (overwrite != null) {
                 cir.setReturnValue(overwrite.getNBTData(player, te, tag, world, pos));
             }
