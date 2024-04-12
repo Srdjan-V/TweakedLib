@@ -60,7 +60,7 @@ public class GroovyPowerTier extends VirtualizedRegistry<PowerTier> {
             return this;
         }
 
-        public PowerTierBuilder rtf(int rft) {
+        public PowerTierBuilder rft(int rft) {
             this.rft = rft;
             return this;
         }

@@ -1,24 +1,27 @@
 package io.github.srdjanv.tweakedlib.common.compat.groovyscript;
 
 import com.cleanroommc.groovyscript.api.GroovyPlugin;
+import com.cleanroommc.groovyscript.api.Result;
 import com.cleanroommc.groovyscript.compat.mods.GroovyContainer;
 import com.cleanroommc.groovyscript.compat.mods.ModPropertyContainer;
+import com.cleanroommc.groovyscript.gameobjects.GameObjectHandlerManager;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import io.github.srdjanv.tweakedlib.TweakedLib;
+import io.github.srdjanv.tweakedlib.api.powertier.PowerTierHandler;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class GroovyScriptRegistry extends ModPropertyContainer implements GroovyPlugin {
-
     private static GroovyScriptRegistry registry;
-
     public static GroovyScriptRegistry getRegistry() {
         return Objects.requireNonNull(registry);
     }
+
+    private final List<Consumer<GroovyContainer<?>>> onCompatLoadedListener = new ObjectArrayList<>();
 
     public GroovyScriptRegistry() {
         registry = this;
@@ -26,7 +29,7 @@ public class GroovyScriptRegistry extends ModPropertyContainer implements Groovy
     }
 
     @Override @Nullable public ModPropertyContainer createModPropertyContainer() {
-        return new GroovyScriptRegistry();
+        return this;
     }
 
     @Override public void addRegistry(VirtualizedRegistry<?> registry) {
@@ -37,10 +40,34 @@ public class GroovyScriptRegistry extends ModPropertyContainer implements Groovy
         return Arrays.asList("TweakedMods", "tweakedMods", "tweakedmods");
     }
 
+    public void addOnCompatLoadedListeners(Consumer<GroovyContainer<?>> onCompatLoaded) {
+        this.onCompatLoadedListener.add(onCompatLoaded);
+    }
+
     @Override public void onCompatLoaded(GroovyContainer<?> container) {
+        GameObjectHandlerManager.registerGameObjectHandler(TweakedLib.MODID, "powerTier", (s, args) -> {
+            if (args.length != 1) return Result.error();
+            int parsedCap;
+            int parsedRFT;
+            try {
+                parsedCap = Integer.parseInt(s);
+                parsedRFT = Integer.parseInt((String) args[0]);
+            } catch (NumberFormatException | ClassCastException e) {
+                return Result.error("'powerTier' arguments must be 2 integers (Capacity, RF/t)");
+            }
+
+            return Result.some(PowerTierHandler.registerPowerTierAndReturnPowerTierObject(parsedCap, parsedRFT));
+        });
+
+        onCompatLoadedListener.forEach(c -> c.accept(container));
+        onCompatLoadedListener.clear();
     }
 
     @Override public @NotNull String getModId() {
         return TweakedLib.MODID;
+    }
+
+    @Override public @NotNull String getContainerName() {
+        return "TweakedMods-Containers";
     }
 }
