@@ -55,7 +55,7 @@ public class DiscoveryHandler {
                 Class<?> clazz = Class.forName(data.getClassName().replace('/', '.'));
                 if (clazz.isInterface()) {
                     handleModule(asmDataTable, (Class<T>) clazz, action);
-                    return;
+                    continue;
                 }
 
                 Constructor<T> constructor = (Constructor<T>) clazz.getDeclaredConstructor();
