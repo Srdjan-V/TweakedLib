@@ -12,12 +12,11 @@ public interface ICustomLogger {
     boolean startupChecks();
 
     /**
-     * This should return true if it found errors at startup.
+     * This should return true if it found passable errors at runtime.
      * This will be called at startup if it's enabled in the configs,
      * or if you request a non-existent powerTier.
      */
     boolean runtimeChecks();
-
 
     /**
      * Return true if this logger doesn't have any runtime checks.
@@ -30,12 +29,7 @@ public interface ICustomLogger {
     Logger getModLogger();
 
     /**
-     * Return your mods configs, may be employ array
-     */
-    String[] getConfigs();
-
-    /**
-     * Returns a lost of errors found by startupChecks() or runtimeChecks();
+     * Returns a list of errors found by startupChecks() or runtimeChecks();
      */
     List<String> getErrors();
 

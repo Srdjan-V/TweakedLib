@@ -1,16 +1,12 @@
 package io.github.srdjanv.tweakedlib.api.logging.errorlogginglib;
 
-import crafttweaker.CraftTweakerAPI;
 import io.github.srdjanv.tweakedlib.TweakedLib;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.apache.logging.log4j.Logger;
 import io.github.srdjanv.tweakedlib.common.Configs;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.function.Consumer;
 
 public final class ErrorLoggingLib {
 
@@ -25,6 +21,12 @@ public final class ErrorLoggingLib {
                 ICustomLogger.class.getSimpleName(), customLogger.getClass().getName());
     }
 
+    private static final List<Consumer<ICustomLogger>> customLoggersListener = new ObjectArrayList<>();
+
+    public static void registerCustomLoggerListener(Consumer<ICustomLogger> listener) {
+        customLoggersListener.add(listener);
+    }
+
     public static void validateState() {
         List<ICustomLogger> loggers = new ObjectArrayList<>();
 
@@ -34,7 +36,7 @@ public final class ErrorLoggingLib {
             }
         });
 
-        if (Configs.TLConfigs.Logging.logMissingPowerTier) {
+        if (Configs.logging.runRuntimeChecksOnStartup) {
             commonRuntimeCheck(loggers);
         }
 
@@ -64,17 +66,8 @@ public final class ErrorLoggingLib {
     }
 
     private static boolean commonLog(List<ICustomLogger> loggers, boolean isRuntime) {
-        if (loggers.isEmpty()) {
-            return false;
-        }
-
-        if (isRuntime) {
-            for (ICustomLogger c : loggers) {
-                logSetting(c);
-            }
-            return true;
-        }
-
+        if (loggers.isEmpty()) return false;
+        if (isRuntime) return true;
         for (ICustomLogger c : loggers) {
             loggAll(c);
             c.clean();
@@ -93,36 +86,15 @@ public final class ErrorLoggingLib {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static void loggAll(ICustomLogger logger) {
-        logSetting(logger);
         logErrors(logger);
-        logErrorsToUserWithCT(logger);
-    }
-
-    private static void logSetting(ICustomLogger logger) {
-        String[] strings = logger.getConfigs();
-        if (strings.length == 0) {
-            return;
-        }
-
-        Logger modLogger = logger.getModLogger();
-        modLogger.info("Configs (" + modLogger.getName() + "):");
-        for (String s : strings) {
-            modLogger.info(s);
-        }
-
+        for (Consumer<ICustomLogger> iCustomLoggerConsumer : customLoggersListener)
+            iCustomLoggerConsumer.accept(logger);
     }
 
     private static void logErrors(ICustomLogger logger) {
         Logger modLogger = logger.getModLogger();
         for (String s : logger.getErrors()) {
             modLogger.error(s);
-        }
-    }
-
-    private static void logErrorsToUserWithCT(ICustomLogger logger) {
-        CraftTweakerAPI.logError(logger.getModLogger().getName());
-        for (String s : logger.getErrors()) {
-            CraftTweakerAPI.logError(s);
         }
     }
 

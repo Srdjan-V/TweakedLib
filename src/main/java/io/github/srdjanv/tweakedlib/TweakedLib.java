@@ -1,7 +1,11 @@
 package io.github.srdjanv.tweakedlib;
 
+import com.cleanroommc.groovyscript.GroovyScript;
+import com.cleanroommc.groovyscript.api.GroovyLog;
+import crafttweaker.CraftTweakerAPI;
 import io.github.srdjanv.tweakedlib.api.integration.DiscoveryHandler;
 import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
+import io.github.srdjanv.tweakedlib.common.Configs;
 import io.github.srdjanv.tweakedlib.common.Constants;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigManager;
@@ -15,7 +19,8 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = TweakedLib.MODID,
         version = TweakedLib.VERSION,
         name = TweakedLib.NAME,
-        dependencies = "after:groovyscript@[" + Tags.GROOVY_SCRIPT_VERSION + ",)")
+        dependencies =
+                "after:crafttweaker@[4.1.20,); after:groovyscript@[" + Tags.GROOVY_SCRIPT_VERSION + ",)")
 public class TweakedLib {
     public static final String NAME = "Tweaked Lib";
     public static final String MODID = "tweakedlib";
@@ -37,6 +42,20 @@ public class TweakedLib {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        if (Constants.isCraftTweakerLoaded() && Configs.logging.shouldPassthroughErrorsToCT) {
+            ErrorLoggingLib.registerCustomLoggerListener(iCustomLogger -> {
+                for (String error : iCustomLogger.getErrors()) CraftTweakerAPI.logError(error);
+            });
+        }
+
+        if (Constants.isGroovyScriptLoaded() && Configs.logging.shouldPassthroughErrorsToGS) {
+            ErrorLoggingLib.registerCustomLoggerListener(iCustomLogger -> {
+                var log = GroovyLog.msg(String.format("Tweaked Lib: Logger: %s", iCustomLogger.getModLogger().getName())).error();
+                for (String error : iCustomLogger.getErrors()) log.add(error);
+                log.post();
+            });
+        }
+
         MinecraftForge.EVENT_BUS.register(this);
         DiscoveryHandler.getInstance().preInit(event);
     }
