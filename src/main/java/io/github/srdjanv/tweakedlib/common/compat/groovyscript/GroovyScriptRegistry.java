@@ -25,7 +25,7 @@ public class GroovyScriptRegistry extends ModPropertyContainer implements Groovy
         return Objects.requireNonNull(registry);
     }
 
-    private final List<Consumer<GroovyContainer<?>>> onCompatLoadedListener = new ObjectArrayList<>();
+    private final List<Consumer<GroovyContainer<GroovyScriptRegistry>>> onCompatLoadedListener = new ObjectArrayList<>();
 
     public GroovyScriptRegistry() {
         registry = this;
@@ -44,30 +44,12 @@ public class GroovyScriptRegistry extends ModPropertyContainer implements Groovy
         return Arrays.asList("TweakedMods", "tweakedMods", "tweakedmods");
     }
 
-    public void addOnCompatLoadedListeners(Consumer<GroovyContainer<?>> onCompatLoaded) {
+    public void addOnCompatLoadedListeners(Consumer<GroovyContainer<GroovyScriptRegistry>> onCompatLoaded) {
         this.onCompatLoadedListener.add(onCompatLoaded);
     }
 
     @Override public void onCompatLoaded(GroovyContainer<?> container) {
-        GameObjectHandler.builder("powerTier", PowerTier.class)
-                .mod(TweakedLib.MODID)
-                .addSignature(Integer.class, Integer.class)
-                .parser((String mainArg, Object[] args)-> {
-                    if (args.length != 1) return Result.error();
-                    int parsedCap;
-                    int parsedRFT;
-                    try {
-                        parsedCap = Integer.parseInt(mainArg);
-                        parsedRFT = Integer.parseInt((String) args[0]);
-                    } catch (NumberFormatException | ClassCastException e) {
-                        return Result.error("'powerTier' arguments must be 2 integers (Capacity, RF/t)");
-                    }
-
-                    return Result.some(PowerTierHandler.registerPowerTierAndReturnPowerTierObject(parsedCap, parsedRFT));
-                })
-                .register();
-
-        onCompatLoadedListener.forEach(c -> c.accept(container));
+        onCompatLoadedListener.forEach(c -> c.accept((GroovyContainer<GroovyScriptRegistry>) container));
         onCompatLoadedListener.clear();
     }
 
