@@ -1,5 +1,6 @@
 package io.github.srdjanv.tweakedlib.api.powertier;
 
+import blusunrize.immersiveengineering.api.energy.immersiveflux.FluxStorage;
 import blusunrize.immersiveengineering.api.energy.immersiveflux.FluxStorageAdvanced;
 import io.github.srdjanv.tweakedlib.TweakedLib;
 import io.github.srdjanv.tweakedlib.api.logging.errorlogginglib.ErrorLoggingLib;
@@ -229,7 +230,7 @@ public final class PowerTierHandler {
      * @param fluxStorage FluxStorageAdvanced object to initialize
      * @param powerTier   PowerTier object
      */
-    public static void initFluxStorageWithPowerTier(FluxStorageAdvanced fluxStorage, PowerTier powerTier) {
+    public static void initFluxStorageWithPowerTier(FluxStorage fluxStorage, PowerTier powerTier) {
         fluxStorage.setCapacity(powerTier.getCapacity());
         fluxStorage.setLimitReceive(Integer.min(powerTier.getRft() * 2, powerTier.getCapacity()));
         fluxStorage.setMaxExtract(powerTier.getRft());
@@ -241,7 +242,7 @@ public final class PowerTierHandler {
      * @param fluxStorage FluxStorageAdvanced object to initialize
      * @param powerTierID PowerTier id
      */
-    public static void initFluxStorageWithPowerTierID(FluxStorageAdvanced fluxStorage, int powerTierID) {
+    public static void initFluxStorageWithPowerTierID(FluxStorage fluxStorage, int powerTierID) {
         PowerTier powerTier = getPowerTier(powerTierID);
         fluxStorage.setCapacity(powerTier.getCapacity());
         fluxStorage.setLimitReceive(Integer.min(powerTier.getRft() * 2, powerTier.getCapacity()));

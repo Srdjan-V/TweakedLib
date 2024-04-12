@@ -65,6 +65,12 @@ public class GroovyPowerTier extends VirtualizedRegistry<PowerTier> {
             return this;
         }
 
+        public PowerTierBuilder capacity(int capacity, int rft) {
+            this.capacity = capacity;
+            this.rft = rft;
+            return this;
+        }
+
         @Override
         public boolean validate() {
             GroovyLog.Msg msg = GroovyLog.msg("Error adding custom Power Tier", "").error();
