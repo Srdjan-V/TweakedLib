@@ -2,6 +2,7 @@ package io.github.srdjanv.tweakedlib.common.compat.groovyscript;
 
 import com.cleanroommc.groovyscript.api.GroovyBlacklist;
 import com.cleanroommc.groovyscript.api.GroovyLog;
+import com.cleanroommc.groovyscript.helper.Alias;
 import com.cleanroommc.groovyscript.helper.recipe.IRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import io.github.srdjanv.tweakedlib.api.powertier.PowerTier;
@@ -14,13 +15,13 @@ import java.util.List;
 public class GroovyPowerTier extends VirtualizedRegistry<PowerTier> {
 
     @GroovyBlacklist GroovyPowerTier() {
-        super(Arrays.asList("PowerTier", "powerTier", "powertier"));
+        super(Alias.generateOf("PowerTier"));
     }
 
     @Override
     @GroovyBlacklist
     public void onReload() {
-        removeScripted().forEach((powerTier) -> PowerTierHandler.unRegisterPowerTier(powerTier.hashCode()));
+        removeScripted().forEach(powerTier -> PowerTierHandler.unRegisterPowerTier(powerTier.getId()));
         restoreFromBackup().forEach(powerTier -> PowerTierHandler.registerPowerTier(powerTier.getCapacity(), powerTier.getRft()));
     }
 
@@ -38,7 +39,7 @@ public class GroovyPowerTier extends VirtualizedRegistry<PowerTier> {
     }
 
     public void remove(PowerTier id) {
-        if (PowerTierHandler.unRegisterPowerTier(id.hashCode())) {
+        if (PowerTierHandler.unRegisterPowerTier(id.getId())) {
             addBackup(id);
         }
     }
@@ -73,7 +74,7 @@ public class GroovyPowerTier extends VirtualizedRegistry<PowerTier> {
 
         @Override
         public boolean validate() {
-            GroovyLog.Msg msg = GroovyLog.msg("Error adding custom Power Tier", "").error();
+            GroovyLog.Msg msg = GroovyLog.msg("Error adding custom Power Tier").error();
 
             msg.add(capacity == Integer.MAX_VALUE,
                     () -> "PowerTier capacity should not be MAX_INT!");
@@ -89,13 +90,10 @@ public class GroovyPowerTier extends VirtualizedRegistry<PowerTier> {
 
         @Override
         public PowerTier register() {
-            if (validate()) {
-                PowerTier powerTier = PowerTierHandler.registerPowerTierAndReturnPowerTierObject(capacity, rft);
-                addScripted(powerTier);
-                return powerTier;
-            }
-
-            return null;
+            if (!validate()) return null;
+            PowerTier powerTier = PowerTierHandler.registerPowerTierAndReturnPowerTierObject(capacity, rft);
+            addScripted(powerTier);
+            return powerTier;
         }
     }
 }
