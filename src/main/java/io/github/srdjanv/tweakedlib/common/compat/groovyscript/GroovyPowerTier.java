@@ -8,10 +8,6 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import io.github.srdjanv.tweakedlib.api.powertier.PowerTier;
 import io.github.srdjanv.tweakedlib.api.powertier.PowerTierHandler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class GroovyPowerTier extends VirtualizedRegistry<PowerTier> {
 
     @GroovyBlacklist GroovyPowerTier() {
