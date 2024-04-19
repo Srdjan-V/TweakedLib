@@ -1,11 +1,11 @@
-tweakedlib.jei.weight=Reservoir Spawn Weight %d
-
 tweakedlib.jei.dimensions=Dimensions
-tweakedlib.jei.dimension_whitelist= §7Dimension Whitelist: %d
-tweakedlib.jei.dimension_blacklist= §7Dimension Blacklist: %d
+tweakedlib.jei.dimension_whitelist=Dimension Whitelist:
+tweakedlib.jei.dimension_blacklist=Dimension Blacklist:
 
-tweakedlib.jei.power_tier=Machine Power Tier: %d
-tweakedlib.jei.power_capacity= §7Machine power capacity: %d RF
-tweakedlib.jei.power_usage= §7Machine power usage: %d RF/t
+tweakedlib.jei.power_tier=Machine Power Tier:
+tweakedlib.jei.power_capacity=Machine power capacity:
+tweakedlib.jei.power_usage=Machine power usage:
 
 tweakedlib.jei.lshift=Hold LShift for more info
+
+tweakedlib.hud.power_tier=Power Tier:
