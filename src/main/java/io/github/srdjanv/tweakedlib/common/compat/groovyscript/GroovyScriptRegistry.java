@@ -1,17 +1,10 @@
 package io.github.srdjanv.tweakedlib.common.compat.groovyscript;
 
 import com.cleanroommc.groovyscript.api.GroovyPlugin;
-import com.cleanroommc.groovyscript.api.IGameObjectParser;
 import com.cleanroommc.groovyscript.api.INamed;
-import com.cleanroommc.groovyscript.api.Result;
 import com.cleanroommc.groovyscript.compat.mods.GroovyContainer;
-import com.cleanroommc.groovyscript.compat.mods.ModPropertyContainer;
-import com.cleanroommc.groovyscript.gameobjects.GameObjectHandler;
-import com.cleanroommc.groovyscript.gameobjects.GameObjectHandlerManager;
-import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
+import com.cleanroommc.groovyscript.compat.mods.GroovyPropertyContainer;
 import io.github.srdjanv.tweakedlib.TweakedLib;
-import io.github.srdjanv.tweakedlib.api.powertier.PowerTier;
-import io.github.srdjanv.tweakedlib.api.powertier.PowerTierHandler;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class GroovyScriptRegistry extends ModPropertyContainer implements GroovyPlugin {
+public class GroovyScriptRegistry extends GroovyPropertyContainer implements GroovyPlugin {
     private static GroovyScriptRegistry registry;
     public static GroovyScriptRegistry getRegistry() {
         return Objects.requireNonNull(registry);
@@ -29,15 +22,19 @@ public class GroovyScriptRegistry extends ModPropertyContainer implements Groovy
 
     public GroovyScriptRegistry() {
         registry = this;
-        addRegistry(new GroovyPowerTier());
+        addProperty(new GroovyPowerTier());
     }
 
-    @Override @Nullable public ModPropertyContainer createModPropertyContainer() {
+    @Override public @Nullable GroovyPropertyContainer createGroovyPropertyContainer() {
         return this;
     }
 
-    @Override public void addRegistry(INamed named) {
-        super.addRegistry(named);
+    @Override public void addProperty(INamed property) {
+        super.addProperty(property);
+    }
+
+    @Deprecated public void addRegistry(INamed named) {
+        super.addProperty(named);
     }
 
     @Override public @NotNull Collection<String> getAliases() {
